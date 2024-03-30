@@ -1,5 +1,101 @@
-body {
+:root {
+  --font-size-primary: 16px;
+  --font-size-secondary: 13px;
+
+  --padding-big: 20px;
+  --padding-common: 10px;
+  --margin-common: 10px;
+  --gap-small: 5px;
+  --gap-common: 10px;
+  --gap-big: 20px;
+  
+  --fgcolor-primary: black;
+  --fgcolor-secondary: gray;
+  
+  --bgcolor-primary: whitesmoke;
+  --bgcolor-secondary: white;
+  --popup-bgcolor: rgba(0, 0, 0, 0.7);
+  
+  --nav-fgcolor: whitesmoke;
+  --nav-bgcolor: black;
+  --nav-fgcolor-selected: whitesmoke; 
+  --nav-bgcolor-selected: blue;
+
+  --footer-fgcolor: whitesmoke;
+  --footer-bgcolor: gray;
+  
+  --button-fgcolor-primary: whitesmoke;
+  --button-bgcolor-primary: blue;
+  --button-fgcolor-secondary: blue;
+  --button-bgcolor-secondary: lightblue;
+  --button-border-radius: 5px;
+  
+  --border-width-common: 2px;
+  --border-color-primary: blue;
+  --border-color-secondary: lightgray;
+
+  --error-color: red;
+}
+
+* {
   margin: 0;
   padding: 0;
+  
+  box-sizing: border-box;
+  
   font-family: sans-serif;
+  font-size: var(--font-size-primary);
+}
+
+body {
+  background-color: var(--bgcolor-secondary);
+}
+
+main {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+input {
+  padding: 5px;
+}
+
+.input:focus, input:focus{
+  outline: none;
+  border-color: var(--border-color-primary);
+}
+
+.button, button, input[type=submit], input[type=button] {
+  cursor: pointer;
+
+  padding: 5px;
+
+  font-weight: bold;
+  
+  color: var(--button-fgcolor-primary);
+  background-color: var(--button-bgcolor-primary);
+  
+  border: none;
+  border-radius: var(--button-border-radius);
+}
+
+.btn-secondary, .button.btn-secondary, button.btn-secondary, input.btn-secondary {
+  color: var(--button-fgcolor-secondary);
+  background-color: var(--button-bgcolor-secondary);
+}
+
+.button:disabled, button:disabled, input:disabled {
+  cursor: not-allowed;
+}
+
+.invisible-scroll {
+  white-space: nowrap;
+  overflow-x: scroll;
+  scrollbar-width: none;  /* hide scrolls (Firefox) */
+  -ms-overflow-style: none;  /* hide scrolls (Internet Explorer, Edge) */
+}
+
+.invisible-scroll::-webkit-scrollbar {
+  display: none; /* hide scrolls (Chrome, Safari, etc) */
 }

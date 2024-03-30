@@ -1,0 +1,24 @@
+.labeled-input {
+    margin-bottom: var(--margin-common);
+}
+
+.labeled-input div {
+    align-items: end;
+    display: flex;
+}
+
+.input-label {
+    font-size: var(--font-size-secondary);
+    margin-right: var(--margin-common);
+}
+
+.input-error {
+    font-size: var(--font-size-secondary);
+    text-transform: lowercase;
+    
+    color: var(--error-color);
+}
+
+.labeled-input input {
+    width: 100%;
+}

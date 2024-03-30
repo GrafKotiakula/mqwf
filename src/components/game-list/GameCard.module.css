@@ -1,0 +1,103 @@
+.game-card{
+    cursor: pointer;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+    gap: var(--gap-common);
+    padding: var(--padding-common);
+
+    background-color: var(--bgcolor-primary);
+}
+
+.game-card * {
+    cursor: pointer;
+}
+
+.game-card-image{
+    --bg-color: whitesmoke;
+    --fg-color: lightgray;
+
+    background-color: var(--bgcolor-primary);
+    box-shadow: inset 0 0 25px var(--fg-color);
+    
+    aspect-ratio: 3/4;
+    width: 100%;
+    overflow: hidden;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-weight: bold;
+    font-size: 1.5em;
+    color: var(--fg-color);
+}
+
+.game-card-image img{
+    flex-grow: 0;
+    max-width: 100%;
+    max-height: 100%;
+    margin: auto;
+    box-sizing: border-box;
+}
+
+.game-card-name{
+    width: 100%;
+
+    text-align: left;
+    
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.game-card-rating{
+    width: 100%;
+    
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    
+    gap: var(--gap-common);
+    margin-top: auto;
+}
+
+.game-card-rating-mark {
+    height: 2.5em;
+    aspect-ratio: 1;
+    
+    display: grid;
+    align-items: center;
+
+    text-align: center;
+    font-weight: bold;
+    
+    border-radius: 0.5em;
+}
+
+.game-card-rating-description {
+    font-style: italic;
+    color: var(--fgcolor-secondary);
+}
+
+.good {
+    background-color: green;
+    color: whitesmoke;
+}
+
+.average {
+    background-color: orange;
+    color: whitesmoke
+}
+
+.bad {
+    background-color: red;
+    color: whitesmoke;
+}
+
+.unmarked {
+    background-color: gray;
+    color: whitesmoke;
+}

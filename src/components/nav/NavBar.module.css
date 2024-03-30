@@ -1,0 +1,135 @@
+.nav-bar {
+    color: var(--nav-fgcolor);
+    background-color: var(--nav-bgcolor);
+}
+
+.nav-content {
+    display: flex;
+    flex-wrap: wrap;
+    /* justify-content: space-between; */
+    align-items: center;
+
+    padding: var(--padding-big);
+    margin: 0 auto;
+    gap: var(--gap-big);
+
+    max-width: 1000px;
+    width: 100%
+}
+
+.logo {
+    margin-right: auto;
+    
+    display: flex;
+    align-items: center;
+    gap: var(--gap-small);
+
+    font-size: 1.2em;
+}
+
+.logo > img {
+    max-height: 1.5em;
+}
+
+.expansion-button {
+    display: none;
+}
+
+.expansion-button > * {
+    box-sizing: border-box;
+}
+
+.route-list {
+    width: fit-content;
+    display: flex;
+    gap: var(--gap-common);
+}
+
+.nav-button {
+    /* cursor: pointer; */
+    padding: var(--padding-common);
+    width: 100%;
+    
+    text-align: left;
+    font-weight: normal;
+    text-decoration: none;
+
+    color: var(--nav-fgcolor);
+    background-color: transparent;
+
+    border-radius: 0;
+}
+
+.nav-button:hover {
+    background-color: var(--nav-fgcolor);
+    color: var(--nav-bgcolor);
+}
+
+.selected {
+    color: var(--nav-fgcolor-selected);
+    background-color: var(--nav-bgcolor-selected);
+}
+
+.auth {
+    padding: var(--padding-common) 0;
+}
+
+.auth-button {
+    padding: var(--padding-common);
+    font-weight: normal;
+    
+    color: var(--nav-fgcolor);
+    background-color: transparent;
+}
+
+/* general (not extended) */
+@media (max-width: 500px) {
+    .logo {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .logo > label {
+        display: none;
+    }
+
+    .nav-content {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .expansion-button {
+        aspect-ratio: 1;
+        height: 100%;
+        min-height: fit-content;
+        font-size: 2em;
+        
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        
+        color: var(--nav-fgcolor);
+        background-color: transparent;
+    }
+    
+    .route-list {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .auth {
+        padding: var(--padding-common) 0;
+    }
+
+    .nav-content:not(.nav-extended) {
+        gap: 0;
+    }
+
+    .nav-content:not(.nav-extended) > .route-list,
+    .nav-content:not(.nav-extended) > .auth {
+        visibility: hidden;
+        max-width: 0;
+        max-height: 0;
+        padding: 0;
+    }
+}

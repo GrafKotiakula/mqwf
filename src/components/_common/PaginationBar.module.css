@@ -1,0 +1,46 @@
+.page-bar {   
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--gap-common);
+}
+
+.pages {
+    width:fit-content;
+
+    display: flex;
+    align-items: center;
+    gap: var(--gap-common);
+}
+
+.page-bar-button {
+    min-width: fit-content;
+    text-align: center;
+    
+    border-style: solid;
+    border-color: var(--button-bgcolor-primary);
+    border-width: var(--border-width-common);
+    border-radius: 0.75em;
+}
+
+.page-bar-skip {
+    width: 100%;
+    max-width: 70px;
+}
+
+.page-bar-current {
+    min-width: fit-content;
+    text-align: center;
+
+    color: var(--button-bgcolor-primary);
+    background-color: var(--button-color-primary);
+    
+    border-style: solid;
+    border-color: var(--button-bgcolor-primary);
+    border-width: var(--border-width-common);
+    border-radius: 0.75em;
+}
+
+.small-page-button, .arrow-button {
+    min-width: 2em;
+}

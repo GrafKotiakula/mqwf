@@ -1,0 +1,13 @@
+.form {
+    padding: var(--padding-common);
+    margin: var(--margin-common);
+    
+    width: calc(100% - 2*var(--margin-common));
+}
+
+.buttons {
+    margin-top: var(--margin-common);
+    display: flex;
+    justify-content: end;
+    gap: var(--gap-common);
+}
