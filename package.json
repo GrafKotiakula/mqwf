@@ -1,14 +1,22 @@
 {
   "name": "game_ratings_mqwf",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "private": true,
   "dependencies": {
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.5",
     "@fortawesome/fontawesome-svg-core": "^6.5.1",
     "@fortawesome/free-brands-svg-icons": "^6.5.1",
     "@fortawesome/free-regular-svg-icons": "^6.5.1",
     "@fortawesome/free-solid-svg-icons": "^6.5.1",
     "@fortawesome/react-fontawesome": "^0.2.0",
+    "@mui/material": "^5.15.14",
+    "chart.js": "^4.4.2",
+    "date-fns": "^3.6.0",
+    "date-fns-tz": "^3.0.0",
     "react": "^18.2.0",
+    "react-chartjs-2": "^5.2.0",
+    "react-collapsible": "^2.10.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.22.3",
     "react-scripts": "5.0.1"

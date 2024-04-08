@@ -1,0 +1,25 @@
+.err-bg {
+    flex-grow: 1;
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    gap: var(--gap-big);
+}
+
+.err-code {
+    line-height: 0.8em;
+    font-size: 8em;
+    font-weight: bold;
+    color: var(--fgcolor-secondary);
+}
+
+.err-text {
+    font-size: 2em;
+    font-weight: bold;
+    color: var(--fgcolor-secondary);
+}

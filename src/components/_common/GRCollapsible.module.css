@@ -1,0 +1,38 @@
+.collapsible {
+    width: 100%;
+    overflow: hidden;
+
+    border: solid;
+    border-color: var(--border-color-primary);
+    border-width: var(--border-width-common);
+    border-radius: var(--padding-common);
+}
+
+.collapsible-trigger {
+    width: 100%;
+    padding: var(--padding-common);
+    
+    display: flex;
+    justify-content: space-between;
+    gap: var(--gap-common);
+
+    font-weight: bold;
+    font-style: italic;
+    
+    background-color: var(--border-color-primary);
+    color: var(--button-fgcolor-primary);
+}
+
+.collapsible-trigger.disabled {
+    background-color: var(--border-color-secondary);
+    color: var(--button-fgcolor-secondary);
+}
+
+.collapsible-inner {
+    color: var(--fgcolor-primary);
+    background-color: var(--bgcolor-primary);
+}
+
+.collapsible.disabled {
+    border-color: var(--border-color-secondary);
+}

@@ -6,7 +6,7 @@ export const withRouter = Component =>
   const params = useParams()
   const [queryParams, setQueryParams] = useSearchParams()
   const routing = {
-    params: params,
+    urlParams: params,
     queryParams: queryParams,
     setQueryParams: setQueryParams,
   }

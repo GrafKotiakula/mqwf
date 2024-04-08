@@ -1,11 +1,16 @@
 import React, { Component } from 'react'
 
 import LabeledInput from '../_common/LabeledInput'
-import { isDefined, isNotEmptyString } from '../../utils/varUtils'
+import LoginContext from '../../LoginContext'
+import { isNotEmptyString } from '../../utils/varUtils'
+import { ErrCode, buildLoginState, signup } from '../../utils/restApi'
 
 import styles from './form.module.css'
 
 class SignupForm extends Component {
+  
+  static contextType = LoginContext
+  
   constructor(props) {
     super(props)
 
@@ -24,6 +29,7 @@ class SignupForm extends Component {
       }
     }
 
+    this.onSubmit = this.onSubmit.bind(this)
     this.setUsername = this.setUsername.bind(this)
     this.setPassword = this.setPassword.bind(this)
     this.setRepeatPassword = this.setRepeatPassword.bind(this)
@@ -31,7 +37,30 @@ class SignupForm extends Component {
 
   onSubmit(event) {
     event.preventDefault()
-    console.log('api.signup')
+    console.log(this.context)
+    if(this.isFilledOutCorrectly()) {
+      const {username: {value: username}, password: {value: password}} = this.state
+
+      signup(username, password)
+      .then(({error, status, json}) => {
+        if(error || !json) {
+          console.log('Sign up error:', {error, json, status})
+        } else if(status === 201) { // Created
+          const login = buildLoginState(username, password, json.token, json.user)
+          this.context.setLogin(login)
+          this.props.onSignup(login)
+        } else if(status === 422 && json.code === ErrCode.DUPLICATED_FIELD) {
+          this.setState({
+            username: {
+              value: username,
+              error: 'Username is already used'
+            }
+          })
+        } else {
+          console.log('Sign up unknown error:', {error, json, status})
+        }
+      })
+    }
   }
 
   validateUsername(username) {
@@ -70,7 +99,7 @@ class SignupForm extends Component {
   setPassword(password) {
     this.setState(prevState => {
       prevState.password = {
-        error: this.validatePassword([password]),
+        error: this.validatePassword(password),
         value: password
       }
       prevState.repeatPassword.error = this.validateRepeatPassword(prevState.repeatPassword.value, password)
@@ -97,7 +126,7 @@ class SignupForm extends Component {
   }
 
   isFilledOutCorrectly() {
-    const checkProp = ({value, error}) => !isDefined(error) && isNotEmptyString(value)
+    const checkProp = ({value, error}) => !error && isNotEmptyString(value)
     return checkProp(this.state.username) 
         && checkProp(this.state.password)
         && checkProp(this.state.repeatPassword)
@@ -123,7 +152,7 @@ class SignupForm extends Component {
           error={repeatPassword.error}
         />
         <div className={styles['buttons']}>
-          <input type='submit' value='Sign up' />
+          <input type='submit' value='Sign up' disabled={!this.isFilledOutCorrectly()}/>
           <input type='button' value='Log in' onClick={this.props.onLoginCollback} className='btn-secondary'/>
         </div>
       </form>

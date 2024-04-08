@@ -29,6 +29,8 @@
 }
 
 .page-bar-current {
+    cursor: not-allowed;
+
     min-width: fit-content;
     text-align: center;
 

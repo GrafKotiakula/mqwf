@@ -1,0 +1,39 @@
+.rl-container {
+    display: flex;
+    flex-direction: column;
+
+    gap: var(--gap-big);
+    padding: var(--padding-common);
+    margin-bottom: var(--margin-common);
+}
+
+.rl-pagination-bar {
+    min-width: min(35em, 100%);
+    width: fit-content;
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+.rl-pagination-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    gap: var(--gap-big);
+    margin: 0 var(--margin-common);
+}
+
+.rl-pagination-content > * {
+    width: 100%;
+}
+
+.rl-pagination-content:empty::before {
+    flex: 1;
+
+    content: 'NO REVIEWS YET';
+    font-weight: bold;
+    text-align: center;
+    
+    color: var(--fgcolor-secondary);
+}

@@ -1,0 +1,54 @@
+.rf-collapsible {
+    margin: var(--margin-common);
+    width: calc(100% - 2*var(--margin-common));
+}
+
+.rf-collapsible-content {
+    padding: var(--padding-common);
+}
+
+.review-form {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+
+    gap: var(--gap-common);
+}
+
+.rf-header {
+    width: 100%;
+
+    text-align: center;
+    font-weight: bold;
+    font-style: italic;
+    color: var(--fgcolor-secondary);
+
+    margin-top: var(--margin-common);
+}
+
+.rf-selector {
+    background-color: var(--bgcolor-secondary);
+    color: var(--fgcolor-primary);
+}
+
+.rf-review-text-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.rf-review-text-error {
+    color: var(--error-color);
+    font-size: var(--font-size-secondary);
+    text-align: center;
+}
+
+.rv-buttons {
+    width: 100%;
+
+    display: flex;
+    justify-content: flex-end;
+
+    gap: var(--gap-common);
+}

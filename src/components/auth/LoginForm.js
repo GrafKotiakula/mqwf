@@ -2,12 +2,16 @@ import React, { Component } from 'react'
 
 import LabeledInput from '../_common/LabeledInput'
 
+import LoginContext from '../../LoginContext'
 import { isDefined } from '../../utils/varUtils'
-import {api, ErrCode} from '../../utils/restApi'
+import { ErrCode, buildLoginState, login } from '../../utils/restApi'
 
 import styles from './form.module.css'
 
 class LoginForm extends Component {
+
+  static contextType = LoginContext
+
   constructor(props) {
     super(props)
 
@@ -33,21 +37,21 @@ class LoginForm extends Component {
     } else if (!isDefined(username) || password === '') {
       this.setError('Password must not be empty')
     } else {
-      api.login(username, password)
-        .then(r => {
-          if(r.status === 200) {
-            console.log('Auth success')
-          } else if(r.status === 401 && r.json.code === ErrCode.WRONG_USERNAME_OR_PASSWORD) {
-            this.setError('Wrong username or password')
-          } else {
-            Promise.reject(`status: ${r.status}\njson: ${r.json}`)
-          }
-        })
-        .catch(err => {
-          console.error(`Unknown error: ${err}`)
-          this.setError('Unknown error')
-        })
       this.setError(null)
+      login(username, password)
+      .then(({status, json}) => {
+        if(status === 200) {
+          const _login = buildLoginState(username, password, json.token, json.user)
+          this.context.setLogin(_login)
+          this.props.onLogin(_login)
+        } else if (status === 401 && json?.code === ErrCode.WRONG_USERNAME_OR_PASSWORD) {
+          this.setError('Wrong username or password')
+        } else if (status === 600) {
+          this.setError('Network error')
+        } else {
+          this.setError('Unknown error')
+        }
+      })
     }
   }
 

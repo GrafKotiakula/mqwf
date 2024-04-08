@@ -1,0 +1,79 @@
+.selector-container {
+    max-width: fit-content;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: var(--gap-small);
+
+    background-color: var(--bgcolor-primary);
+
+    padding: var(--padding-common) 0;
+
+    border: solid;
+    border-color: var(--border-color-secondary);
+    border-radius: var(--padding-common);
+}
+
+.selector-container:hover {
+    border-color: var(--border-color-primary);
+}
+
+.selector-name {
+    text-align: left;
+    padding: 0 var(--padding-common);
+
+    font-weight: bold;
+}
+
+.selector-wrapper {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 var(--padding-small);
+}
+
+.icon {
+    font-size: 1.75em;
+    transform: rotate(20deg);
+    margin: var(--margin-small);
+}
+
+.selector-description {
+    text-align: right;
+    padding: 0 var(--padding-common);
+    
+    color: var(--fgcolor-secondary);
+    font-style: italic;
+}
+
+.sd-mark{
+    color: var(--fgcolor-primary);
+    font-weight: bold;
+    font-style: normal;
+    margin-left: var(--margin-small);
+}
+
+@media (max-width: 400px) {
+    .icon {
+        font-size: 1.5em;
+    }
+}
+
+@media (max-width: 300px) {
+    .icon {
+        font-size: 1.25em;
+    }
+}
+
+@media (max-width: 200px) {
+    .icon {
+        font-size: 1em;
+    }
+}
+
+.mui-ic:global(.good), .mui-ic:global(.average), .mui-ic:global(.bad), 
+.mui-ic:global(.n-high), .mui-ic:global(.n-medium), .mui-ic:global(.n-low) {
+    color: var(--color);
+}

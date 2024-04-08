@@ -37,16 +37,16 @@ const generateNeighbors = (current, neighbors, limit, nextNeighbor, skipKey) => 
 }
 
 const buildOnSubmit = (callBack) => {
-    if(typeof callBack === 'function') {
-      return (event) => {
-        event.preventDefault()
-        const value = (event.submitter || event.nativeEvent.submitter).value
-        callBack(value)
-      }
-    } else {
-      return undefined
+  if(typeof callBack === 'function') {
+    return (event) => {
+      event.preventDefault()
+      const value = (event.submitter || event.nativeEvent.submitter).value
+      callBack(value)
     }
+  } else {
+    return undefined
   }
+}
 
 const PaginationBar = ({
                     startFrom = 1,
@@ -68,9 +68,9 @@ const PaginationBar = ({
         
         <div className={`${styles['pages']} invisible-scroll`}>
           {current > startFrom && generateButton({name: startFrom})}
-          {generateNeighbors(current, neighbors, 1, n => n-1, 'skip-l').reverse()}
+          {current > startFrom && generateNeighbors(current, neighbors, 1, n => n-1, 'skip-l').reverse()}
           <label className={`button ${styles['page-bar-current']} ${ current < 10 ? styles['small-page-button'] : ''}`}>{current}</label>
-          {generateNeighbors(current, neighbors, count, n => n+1, 'skip-r')}
+          {current < count && generateNeighbors(current, neighbors, count, n => n+1, 'skip-r')}
           {current < count && generateButton({name: count})}
         </div>
         

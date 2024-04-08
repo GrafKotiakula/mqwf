@@ -11,3 +11,14 @@
     justify-content: end;
     gap: var(--gap-common);
 }
+
+.input-error {
+    display: block;
+    margin: 0 auto;
+    
+    font-size: var(--font-size-secondary);
+    text-transform: lowercase;
+    text-align: center;
+    
+    color: var(--error-color);
+}

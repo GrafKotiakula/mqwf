@@ -4,9 +4,12 @@ import LoginForm from '../auth/LoginForm'
 import SignupForm from '../auth/SignupForm'
 import Popup from '../_common/Popup'
 
-import { api } from '../../utils/restApi'
+import { isLogedin, logoutState } from '../../utils/restApi'
+import LoginContext from '../../LoginContext'
 
 class NavAuthForm extends Component {
+
+  static contextType = LoginContext
 
   constructor(props){
     super(props)
@@ -19,6 +22,7 @@ class NavAuthForm extends Component {
     this.setSignUp = this.setSignUp.bind(this)
     this.setVisible = this.setVisible.bind(this)
     this.setInvisible = this.setInvisible.bind(this)
+    this.logout = this.logout.bind(this)
   }
 
   setLogIn() {
@@ -41,17 +45,21 @@ class NavAuthForm extends Component {
     this.setState({visible: false})
   }
 
+  logout() {
+    this.context.setLogin(logoutState)
+  }
+
   render() {
     return (
       <div>
-        {api.isLogedin() ? 
-          <button type='button' onClick={api.logout} className={this.props.className}>Log out</button> :
+        {isLogedin(this.context.login) ? 
+          <button type='button' onClick={this.logout} className={this.props.className}>Log out</button> :
           <button type='button' onClick={this.setVisible} className={this.props.className}>Log in</button>
         }
         <Popup show={this.state.visible} onClose={this.setInvisible}>
           {this.state.isLogIn ? 
-            <LoginForm onSignupCollback={this.setSignUp}/> : 
-            <SignupForm onLoginCollback={this.setLogIn}/>
+            <LoginForm onSignupCollback={this.setSignUp} onLogin={this.setInvisible}/> : 
+            <SignupForm onLoginCollback={this.setLogIn} onSignup={this.setInvisible}/>
           }
         </Popup>
       </div>

@@ -6,7 +6,6 @@
 .nav-content {
     display: flex;
     flex-wrap: wrap;
-    /* justify-content: space-between; */
     align-items: center;
 
     padding: var(--padding-big);
@@ -46,7 +45,6 @@
 }
 
 .nav-button {
-    /* cursor: pointer; */
     padding: var(--padding-common);
     width: 100%;
     
@@ -82,7 +80,6 @@
     background-color: transparent;
 }
 
-/* general (not extended) */
 @media (max-width: 500px) {
     .logo {
         width: 100%;

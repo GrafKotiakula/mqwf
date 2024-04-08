@@ -6,12 +6,17 @@ import { faBars } from "@fortawesome/free-solid-svg-icons"
 
 import NavAuthForm from './NavAuthForm'
 import { getValueOrDefault } from '../../utils/varUtils'
+import LoginContext from '../../LoginContext'
 
 import styles from './NavBar.module.css'
+import { isLogedin } from '../../utils/restApi'
 
 const buildNavLinkClass = ({isActive}) => styles['nav-button'] + (isActive ? ` ${styles['selected']}` : '')
 
 class NavBar extends Component {
+
+  static contextType = LoginContext
+
   constructor(props) {
     super(props)
 
@@ -30,7 +35,7 @@ class NavBar extends Component {
   }
 
   render() {
-    const {src: logoSrc='logo.jpg', alt: logoAlt=''} = getValueOrDefault(this.props.logo, {})
+    const {src: logoSrc='/logo.jpg', alt: logoAlt='GR'} = getValueOrDefault(this.props.logo, {})
     const navClasses = styles['nav-content'] + (this.state.extended ? ` ${styles['nav-extended']}` : '')
     return (
       <nav className={styles['nav-bar']}>
@@ -51,6 +56,11 @@ class NavBar extends Component {
             <NavLink className={buildNavLinkClass} to='/list'>
               List
             </NavLink>
+            {isLogedin(this.context.login) &&
+            <NavLink className={buildNavLinkClass} to='/my-page'>
+              Me
+            </NavLink>
+            }
           </div>
           
           <div className={styles['auth']} >

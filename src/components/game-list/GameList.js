@@ -5,48 +5,10 @@ import SearchBar from '../_common/SearchBar'
 import PaginationBar from '../_common/PaginationBar'
 
 import { withRouter } from '../../utils/routingUtils'
-import { getValueOrDefault } from '../../utils/varUtils'
+import { getValueOrDefault, isDefined } from '../../utils/varUtils'
 
 import styles from './GameList.module.css'
-
-// tmp data
-const buildGame = ({imgName, gameName, rating}) => {
-  return {
-    name: gameName,
-    release: new Date(),
-    image: imgName === null ? null : {
-      id: 'IMG_ID',
-      name: imgName,
-      alternate: 'awesome image alt'
-    },
-    avgRating: {
-      mainRating: rating
-    }
-  }
-}
-// tmp data
-const gameList = [].concat(...Array(5).fill([
-  buildGame({
-    imgName: 'img-1.jpg',
-    gameName: 'Awesome game very prevery super duper long name 2',
-    rating: 8.8
-  }),
-  buildGame({
-    imgName: 'img-2.jpg',
-    gameName: 'Awesome game very prevery super duper long name 3 (even loooooooonger)',
-    rating: 6.1
-  }),
-  buildGame({
-    imgName: 'img-3.jpg',
-    gameName: 'no hope',
-    rating: 2.2
-  }),
-  buildGame({
-    imgName: null,
-    gameName: 'LOGO',
-    rating: 0
-  })
-]));
+import { getAllGames } from '../../utils/restApi'
 
 const serchTextParameterName = 'search'
 const pageParameterName = 'page'
@@ -61,6 +23,7 @@ export class GameList extends Component {
       searchText: getValueOrDefault(this.props.routing.queryParams.get(serchTextParameterName), ''),
       pageCount: Math.max(15, page),
       page: page,
+      games: null,
     }
 
     this.setText = this.setText.bind(this)
@@ -75,11 +38,12 @@ export class GameList extends Component {
   }
 
   setText(text) {
+    console.log('text updating')
     this.setState(prev => {
-      prev.searchText=text
-      prev.pageCount=100
-      this.updateQuery(prev)
-      return prev
+      const newObj = {...prev}
+      newObj.searchText=text
+      this.updateQuery(newObj)
+      return newObj
     })
   }
 
@@ -89,16 +53,40 @@ export class GameList extends Component {
 
   setPage(page) {
     this.setState(prev => {
-      prev.page = this.calculatePage(page, 1, prev.pageCount)
-      this.updateQuery(prev)
-      return prev
+      const newState = {...prev}
+      newState.page = this.calculatePage(page, 1, newState.pageCount)
+      this.updateQuery(newState)
+      return newState
     })
   }
 
-  // TODO: load data (componentDidMount, componentDidUpdate)
+  updateGameList() {
+    getAllGames(this.state.page - 1)
+    .then(({status, json}) => {
+      if(status !== 200) {
+        console.error('Get all games:', {status, json})
+      } else {
+        const {content, pagination: {pageNumber, totalPages}} = json
+        this.setState({
+          page: pageNumber + 1,
+          pageCount: totalPages,
+          games: content
+        })
+      }
+    })
+  }
+
+  componentDidMount() {
+    this.updateGameList()
+  }
+
+  componentDidUpdate(_, prevState) {
+    if(prevState.searchText !== this.state.searchText || prevState.page !== this.state.page){
+      this.updateGameList()
+    }
+  }
 
   render() {
-    const games = gameList.slice(0, gameList.length - (this.state.page - 1) * 3)
     return (
       <div className={styles['game-list-component']}>
         <div className={styles['game-list-top-controllers']}>
@@ -106,9 +94,15 @@ export class GameList extends Component {
           <PaginationBar className={styles['game-list-pagination']} current={this.state.page} count={this.state.pageCount} onSelect={this.setPage}/>
         </div>
         
-        <div className={styles['game-list']}>
-          {games.map((game, index) => <GameCard game={game} key={index} className={styles['game-list-element']}/>)}
-        </div>
+        {isDefined(this.state.games) ?
+          (
+            <div className={styles['game-list']}>
+              {this.state.games.map((game, index) => <GameCard game={game} key={index} className={styles['game-list-element']}/>)}
+            </div>
+          )
+          :
+          <span style={{margin: '0 auto'}}>Loading...</span>
+        }
         
         <PaginationBar className={styles['game-list-pagination']} current={this.state.page} count={this.state.pageCount} onSelect={this.setPage}/>
       </div>

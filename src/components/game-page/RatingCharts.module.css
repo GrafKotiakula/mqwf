@@ -1,0 +1,28 @@
+.charts-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    gap: var(--gap-common);
+    padding: var(--padding-common);
+}
+
+.charts-container > *{
+    display: flex;
+    align-items: center;
+}
+
+@media (max-width: 1000px) {
+    .charts-container {
+        flex-wrap: wrap;
+    }
+    .charts-container > * {
+        max-width: 350px;
+    }
+}
+
+@media (max-width: 500px) {
+    .charts-container {
+        flex-direction: column;
+    }
+}

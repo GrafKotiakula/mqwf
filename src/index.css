@@ -1,13 +1,21 @@
 :root {
+  --image-empty-content: 'GR MQWF';
+  --gamelist-empty-content: 'NO CONTENT';
+
   --font-size-primary: 16px;
   --font-size-secondary: 13px;
 
-  --padding-big: 20px;
   --padding-common: 10px;
+  --padding-big: 20px;
+  --margin-small: 4px;
   --margin-common: 10px;
+  --margin-big: 20px;
   --gap-small: 5px;
   --gap-common: 10px;
   --gap-big: 20px;
+
+  --img-minwidth: 250px;
+  --img-maxwidth: 400px;
   
   --fgcolor-primary: black;
   --fgcolor-secondary: gray;
@@ -37,6 +45,34 @@
   --error-color: red;
 }
 
+.good {
+  --color: green;
+}
+
+.average {
+  --color: goldenrod;
+}
+
+.bad {
+  --color: firebrick;
+}
+
+.n-high {
+  --color: indigo;
+}
+
+.n-medium {
+  --color: mediumblue;
+}
+
+.n-low {
+  --color: dodgerblue;
+}
+
+.unmarked {
+  --color: gray;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -57,11 +93,15 @@ main {
   flex-direction: column;
 }
 
-input {
+.input, input[type=text], input[type=password], textarea {
   padding: 5px;
+
+  border-style: solid;
+  border-width: var(--border-width-common);
+  border-color: var(--border-color-secondary);
 }
 
-.input:focus, input:focus{
+.input:focus, input[type=text]:focus, input[type=password]:focus, textarea:focus{
   outline: none;
   border-color: var(--border-color-primary);
 }

@@ -35,19 +35,18 @@
     width: fit-content;
     max-width: 100%;
     margin: 0 auto;
-    /* margin-top: auto; */
 }
 
 .game-list {
     flex-grow: 1;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(var(--img-minwidth), 1fr));
     gap: var(--gap-common);
-    align-items: self-start;
+    align-items: start;
 }
 
 .game-list-element {
-    max-width: 400px;
+    max-width: var(--img-maxwidth);
 }
 
 .game-list:empty {
@@ -55,7 +54,7 @@
 }
 
 .game-list:empty::before {
-    content: 'NO CONTENT';
+    content: var(--gamelist-empty-content);
     text-align: center;
     font-size: 4em;
     font-weight: bold;

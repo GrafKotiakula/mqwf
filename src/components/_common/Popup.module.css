@@ -4,6 +4,7 @@
     right: 0;
     bottom: 0;
     top: 0;
+    z-index: 2;
 
     visibility: visible !important;
     display: flex !important;
@@ -23,7 +24,7 @@
 
     min-width: min(500px, 100svw);
     width: max-content;
-    max-width: 100swm;
+    max-width: 100svw;
 
     border: solid;
     border-width: var(--border-width-common);
@@ -61,6 +62,4 @@
     border-radius: 0;
     border-bottom-left-radius: var(--button-border-radius);
     border-color: inherit;
-
-
 }
