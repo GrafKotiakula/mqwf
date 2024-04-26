@@ -4,13 +4,13 @@ import RatingCharts from './RatingCharts'
 import GameRatingList from './GameRatingList'
 import ReviewForm from './ReviewForm'
 import GameHeader from './GameHeader'
-import ReviewList from './ReviewList'
-import HttpError from '../_common/HttpError'
+import GRDataLoader from '../_common/GRDataLoader'
 
 import { withRouter } from '../../utils/routingUtils'
-import { getGameById } from '../../utils/restApi'
+import { getGameById } from "../../api/gameRestApi"
 
 import styles from './GamePage.module.css'
+import GPReviewList from './GPReviewList'
 
 export class GamePage extends Component {
   constructor(props){
@@ -53,27 +53,19 @@ export class GamePage extends Component {
   }
 
   render() {
-    if(this.state.error) {
-      return (
-        <div className={styles['gp-content']}>
-          <HttpError error={this.state.error}/>
-        </div>  
-      )
-    } else {
-      return (
-        <div className={styles['gp-content']}>
-          <GameHeader game={this.state.game}/>
-          
-          <label className={styles['gp-header']}>Marks</label>
-          <RatingCharts game={this.state.game}/>
-          <GameRatingList ratings={this.state.game?.avgRating}/>
-  
-          <label className={styles['gp-header']}>Reviews</label>
-          <ReviewForm game={this.state.game}/>
-          <ReviewList game={this.state.game}/>
-        </div>
-      )
-    }
+    return (
+      <GRDataLoader error={this.state.error} isLoaded={this.state.game} loadedClassName={styles['gp-content']}>
+        <GameHeader game={this.state.game}/>
+        
+        <label className={styles['gp-header']}>Marks</label>
+        <RatingCharts game={this.state.game}/>
+        <GameRatingList ratings={this.state.game?.avgRating}/>
+
+        <label className={styles['gp-header']}>Reviews</label>
+        <ReviewForm game={this.state.game}/>
+        <GPReviewList game={this.state.game}/>
+      </GRDataLoader>
+    )
   }
 }
 

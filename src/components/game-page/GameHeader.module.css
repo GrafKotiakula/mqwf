@@ -30,14 +30,15 @@
     height: fit-content;
 }
 
-.gd-props{
+/* .gd-props{
     display: grid;
-    grid-template-columns: 150px 1fr;
+    grid-template-columns: fit-content 1fr;
+    column-gap: 10px;
 }
 
 .gd-props > * {
     width:fit-content;
-}
+} */
 
 .gd-rating {
     display: flex;

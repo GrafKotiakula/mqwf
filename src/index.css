@@ -1,5 +1,6 @@
 :root {
   --image-empty-content: 'GR MQWF';
+  --avatar-empty-content: 'GR';
   --gamelist-empty-content: 'NO CONTENT';
 
   --font-size-primary: 16px;
@@ -27,22 +28,25 @@
   --nav-fgcolor: whitesmoke;
   --nav-bgcolor: black;
   --nav-fgcolor-selected: whitesmoke; 
-  --nav-bgcolor-selected: blue;
+  --nav-bgcolor-selected: mediumblue;
 
   --footer-fgcolor: whitesmoke;
   --footer-bgcolor: gray;
   
   --button-fgcolor-primary: whitesmoke;
-  --button-bgcolor-primary: blue;
-  --button-fgcolor-secondary: blue;
+  --button-bgcolor-primary: mediumblue;
+  --button-fgcolor-secondary: mediumblue;
   --button-bgcolor-secondary: lightblue;
+  --button-fgcolor-danger: whitesmoke;
+  --button-bgcolor-danger: firebrick;
   --button-border-radius: 5px;
   
   --border-width-common: 2px;
-  --border-color-primary: blue;
+  --border-color-primary: mediumblue;
   --border-color-secondary: lightgray;
 
   --error-color: red;
+  --warn-color: mediumblue;
 }
 
 .good {
@@ -93,15 +97,18 @@ main {
   flex-direction: column;
 }
 
-.input, input[type=text], input[type=password], textarea {
+.input, input[type=text], input[type=password], textarea, select {
   padding: 5px;
 
   border-style: solid;
   border-width: var(--border-width-common);
   border-color: var(--border-color-secondary);
+
+  background-color: white;
 }
 
-.input:focus, input[type=text]:focus, input[type=password]:focus, textarea:focus{
+.input:focus, input[type=text]:focus, input[type=password]:focus, 
+textarea:focus, select:focus{
   outline: none;
   border-color: var(--border-color-primary);
 }
@@ -125,6 +132,11 @@ main {
   background-color: var(--button-bgcolor-secondary);
 }
 
+.danger, .button.danger, button.danger, input.danger {
+  color: var(--button-fgcolor-danger);
+  background-color: var(--button-bgcolor-danger);
+}
+
 .button:disabled, button:disabled, input:disabled {
   cursor: not-allowed;
 }
@@ -132,6 +144,7 @@ main {
 .invisible-scroll {
   white-space: nowrap;
   overflow-x: scroll;
+  text-overflow: ellipsis;
   scrollbar-width: none;  /* hide scrolls (Firefox) */
   -ms-overflow-style: none;  /* hide scrolls (Internet Explorer, Edge) */
 }

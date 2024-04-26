@@ -24,6 +24,8 @@
 .rl-item {
     --highlited-color: var(--fgcolor-primary);
 
+    min-width: fit-content;
+
     background-color: var(--bgcolor-secondary);
     
     display: flex;
@@ -58,6 +60,7 @@
 
 .rl-item-rating-text {
     font-style: italic;
+    white-space: nowrap;
 
     color: var(--fgcolor-secondary);
 }

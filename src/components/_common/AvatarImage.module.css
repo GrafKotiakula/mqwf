@@ -1,0 +1,17 @@
+.avatar {
+    aspect-ratio: 1;
+    width: min(300px, 100%);
+
+    border-radius: 50%;
+}
+
+.avatar img {
+    height: 100%;
+    width: 100%
+}
+
+.avatar::before {
+    content: var(--avatar-empty-content);
+    font-size: 1.2em;
+}
+

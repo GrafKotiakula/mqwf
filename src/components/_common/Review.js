@@ -1,12 +1,19 @@
 import React from 'react'
-import GRImage from '../_common/GRImage'
 
-import GameRatingList from './GameRatingList'
+import GameRatingList from '../game-page/GameRatingList'
+import { formattedDate, selectStyle } from '../../utils/dataUtils'
 
-import { formattedString, selectStyle } from '../../utils/dataUtils'
 import styles from './Review.module.css'
 
-const Review = ({review}) => {
+const defaultHeader = review => (
+  <div className={styles['rv-header']}>
+    <label >{review.user.username}</label>
+    <label >{review.game.name}</label>
+    <label >{formattedDate(review.date)}</label>
+  </div>
+)
+
+const Review = ({review, headerBuilder}) => {
   const mainRating = review.rating.mainRating
   const qualityClassName = selectStyle(mainRating, {
     high: styles['good'],
@@ -15,11 +22,7 @@ const Review = ({review}) => {
   })
   return (
     <div className={`${styles['rv-container']} ${qualityClassName}`}>
-      <div className={styles['rv-header']}>
-        <GRImage image={review.user.image} className={styles['rv-header-image']} />
-        <label className={styles['rv-header-username']}>{review.user.username}</label>
-        <label className={styles['rv-header-date']}>{formattedString(review.date)}</label>
-      </div>
+      { typeof headerBuilder === 'function' ? headerBuilder(review) : defaultHeader(review) }
       <div className={styles['rv-content']}>
         <GameRatingList ratings={review.rating} name='Marks' grouped={false} className={styles['rv-marks-collapsible']}/>
         <p className={styles['rv-review']}>{review.text}</p>

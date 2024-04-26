@@ -1,16 +1,14 @@
 import React from 'react'
-
-import { getValueOrDefault, isDefined } from '../../utils/varUtils'
-import { imageSource } from '../../utils/restApi'
-
+import { imageSource } from "../../api/imageRestApi"
 import styles from './GRImage.module.css'
 
-const GRImage = ({image, className, isStatic = false}) => {
-  const imgSrc = isStatic ? image?.name : imageSource(image)
+const GRImage = ({image, className='', isStatic = false}) => {
+  const imgSrc = isStatic ? image : imageSource(image)
+  const alt = isStatic? image : image?.alternate
   return (
     <div className={`${className} ${styles['image']}`}>
-      { isDefined(image) && 
-        <img src={imgSrc} alt={getValueOrDefault(image.alternate, 'alt')}/>
+      { image && 
+        <img src={imgSrc} alt={alt}/>
       }
     </div>
   )

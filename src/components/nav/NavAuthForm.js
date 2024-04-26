@@ -4,7 +4,7 @@ import LoginForm from '../auth/LoginForm'
 import SignupForm from '../auth/SignupForm'
 import Popup from '../_common/Popup'
 
-import { isLogedin, logoutState } from '../../utils/restApi'
+import { buildLogoutState, isLogedin } from "../../api/authRestApi"
 import LoginContext from '../../LoginContext'
 
 class NavAuthForm extends Component {
@@ -15,7 +15,7 @@ class NavAuthForm extends Component {
     super(props)
     this.state = {
       isLogIn: true,
-      isVisible: false
+      visible: false
     }
 
     this.setLogIn = this.setLogIn.bind(this)
@@ -46,7 +46,7 @@ class NavAuthForm extends Component {
   }
 
   logout() {
-    this.context.setLogin(logoutState)
+    this.context.setLogin(buildLogoutState())
   }
 
   render() {

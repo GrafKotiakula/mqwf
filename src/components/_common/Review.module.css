@@ -9,6 +9,17 @@
 }
 
 .rv-header {
+    display: flex;
+    justify-content: center;
+
+    gap: var(--gap-big);
+    padding: var(--padding-common);
+
+    color: var(--rv-fg-color);
+    background-color: var(--rv-bg-color);
+}
+
+/* .rv-header {
     --img-size: 80px;
 
     display: grid;
@@ -27,15 +38,9 @@
 
     grid-row: 1 / 3;
 
-    border-radius: calc(var(--img-size)/2);
     border: solid;
     border-width: var(--border-width-common);
     border-color: var(--rv-fg-color);
-}
-
-.rv-header-image img {
-    height: 100%;
-    width: 100%
 }
 
 .rv-header-username {
@@ -48,11 +53,7 @@
 
 .rv-header-date {
     font-style: italic;
-}
-
-.rv-header-image:empty::before {
-    content: 'GR';
-}
+} */
 
 .rv-content {
     padding: var(--padding-common);
@@ -79,6 +80,8 @@
 
 .rv-review:empty::before {
     content: 'no review';
+    color: var(--fgcolor-secondary);
+    font-style: italic;
 }
 
 .rv-container.good {

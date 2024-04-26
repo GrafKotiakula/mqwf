@@ -2,17 +2,20 @@ import React, { Component } from 'react'
 import RatingSelector from './RatingSelector'
 
 import GRCollapsible from '../_common/GRCollapsible'
-import Overlappable from '../_common/Overlappable'
+import GRDataLoader from '../_common/GRDataLoader'
 
 import LoginContext from '../../LoginContext'
 import { getDescriptionGetter, negativeRatings, neutralRatings, positiveRatings,
   negativeStyleSelector, neutralStyleSelector, positiveStyleSelector, restorApiRating } from '../../utils/dataUtils'
-import { isDefined, isNotEmptyString } from '../../utils/varUtils'
-import { ErrCode, findReviewByGameAndAuth, isLogedin, saveReview } from '../../utils/restApi'
+import { isNotEmptyString } from '../../utils/varUtils'
+import { isLogedin } from "../../api/authRestApi"
+import { findReviewByGameAndAuth, saveReview } from "../../api/reviewsRestApi"
+import ErrorCode from "../../api/ErrorCode"
+import { validateReviewText } from '../../utils/validationUtils'
 
 import styles from './ReviewForm.module.css'
 
-const minTextareaHeight = 100
+const minTextareaHeight = 100 // px
 
 export class ReviewForm extends Component {
   
@@ -39,10 +42,12 @@ export class ReviewForm extends Component {
     if(isNotEmptyString(text)) {
       this.setState({ 
         reviewText: text,
+        error: validateReviewText(text)
       })
     } else {
       this.setState({
-        reviewText: undefined
+        reviewText: '',
+        error: null
       })
     }
   }
@@ -89,7 +94,7 @@ export class ReviewForm extends Component {
             ...this.fromReview(json),
             isLoaded: true
           })
-        } else if(status === 404 && json?.code === ErrCode.REVIEW_BY_GAME_AND_USER_NOT_FOUND) {
+        } else if(status === 404 && json?.code === ErrorCode.REVIEW_BY_GAME_AND_USER_NOT_FOUND) {
           console.debug('Review not found')
           this.setState({
             ...this.fromReview(),
@@ -105,35 +110,42 @@ export class ReviewForm extends Component {
 
   onSubmit(event) {
     event.preventDefault()
-    const review = {
-      id: this.state.reviewId,
-      text: this.state.reviewText ? this.state.reviewText : null,
-      rating: restorApiRating({
-        ...this.state.positiveRatings,
-        ...this.state.neutralRatings,
-        ...this.state.negativeRatings,
-      }),
-      gameId: this.props.game?.id
-    }
-    console.log(review)
-    saveReview(review, this.context.login)
-    .then(({status, json}) => {
-      if(status >= 400) {
-        console.error('Review save error: ', {error, status, json})
-      } else {
-        console.debug('Review save success')
+    if(!this.state.error) {
+      const {login, setLogin} = this.context
+      const review = {
+        id: this.state.reviewId,
+        text: this.state.reviewText ? this.state.reviewText : null,
+        rating: restorApiRating({
+          ...this.state.positiveRatings,
+          ...this.state.neutralRatings,
+          ...this.state.negativeRatings,
+        }),
+        gameId: this.props.game?.id
       }
-    })
+      
+      saveReview(review, login)
+      .then(({status, json, newLogin}) => {
+        if(newLogin) {
+          setLogin(newLogin)
+        }
+        if(status >= 400) {
+          console.error('Review save error: ', {error, status, json})
+        } else {
+          console.debug('Review save success')
+        }
+      })
+    }
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const {login, setLogin} = this.context
+    const {login} = this.context
     if(!isLogedin(login) && this.state.isLoaded) {
       this.setState({
         isLoaded: false
       })
     }
-    if(prevProps.game?.id !== this.props.game?.id || !this.state.isLoaded) {
+    if((prevProps.game?.id !== this.props.game?.id)
+     || (isLogedin(login) && !this.state.isLoaded)) {
       this.loadRating()
     }
   }
@@ -166,8 +178,8 @@ export class ReviewForm extends Component {
     }
 
     return (
-      <GRCollapsible name={name} className={styles['rf-collapsible']} disabled={disabled}>
-        <Overlappable className={styles['rf-collapsible-content']} showOverlap={!this.state.isLoaded}>
+      <GRCollapsible name={name} className={styles['rf-collapsible']} disabled={disabled} contentClassName={styles['rf-collapsible-content']}>
+        <GRDataLoader isLoaded={this.state.isLoaded}>
           <form onSubmit={this.onSubmit} className={styles['review-form']}>
             
             <label className={styles['rf-header']}>Ratings</label>
@@ -177,19 +189,19 @@ export class ReviewForm extends Component {
             
             <label className={styles['rf-header']}>Comment</label>
             <div className={styles['rf-review-text-container']}>
-              {isDefined(this.state.error) && <label className={styles['rf-review-text-error']}>{this.state.error}</label>}
+              {this.state.error && <label className={styles['rf-review-text-error']}>{this.state.error}</label>}
               <textarea style={{minHeight: `${minTextareaHeight}px`}}
                 value={this.state.reviewText} onChange={this.setText}
               />
             </div>
-
+  
             <div className={styles['rv-buttons']}>
-              <input type='submit' value='submit'/>
+              <input type='submit' value='submit' disabled={this.state.error}/>
               <input type='button' value='clear' onClick={this.clearForm}/>
             </div>
-
+  
           </form>
-        </Overlappable>
+        </GRDataLoader>
       </GRCollapsible>
     )
   }

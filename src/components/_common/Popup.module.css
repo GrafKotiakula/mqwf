@@ -4,21 +4,22 @@
     right: 0;
     bottom: 0;
     top: 0;
-    z-index: 2;
+    z-index: 10;
+
+    overflow: scroll;
 
     visibility: visible !important;
-    display: flex !important;
-    align-items: center;
-    justify-content: center;
+    display: grid !important;
 
     background-color: var(--popup-bgcolor);
 }
 
 .popup-body {
+    margin: auto;
+
     background-color: var(--bgcolor-primary);
     color: var(--fgcolor-primary);
 
-    position: relative;
     display: flex;
     flex-direction: column;
 
@@ -38,6 +39,8 @@
 .popup-content {
     padding: var(--padding-big);
     padding-top: 0;
+
+    overflow: scroll;
 
     width: 100%;
 }

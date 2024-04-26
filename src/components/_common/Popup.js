@@ -7,7 +7,7 @@ import styles from './Popup.module.css'
 
 function Popup({show, children, onClose}) {
   return show ? (
-    <div className={styles['popup-bg']} onClick={onClose}>
+    <div className={`${styles['popup-bg']} invisible-scroll`} onClick={onClose}>
         <div className={styles['popup-body']} onClick={e => {e.stopPropagation()}}>
             <button className={styles['popup-close-button']} onClick={onClose}>
               <FontAwesomeIcon icon={faXmark} size='1x'/>

@@ -1,9 +1,13 @@
 import React, { Component } from 'react'
 
 import LabeledInput from '../_common/LabeledInput'
+
 import LoginContext from '../../LoginContext'
+import { validatePassword, validateRepeatPassword, validateUsername } from '../../utils/validationUtils'
 import { isNotEmptyString } from '../../utils/varUtils'
-import { ErrCode, buildLoginState, signup } from '../../utils/restApi'
+import { buildLoginState } from "../../api/authRestApi"
+import { signup } from "../../api/authRestApi"
+import ErrorCode from "../../api/ErrorCode"
 
 import styles from './form.module.css'
 
@@ -46,10 +50,15 @@ class SignupForm extends Component {
         if(error || !json) {
           console.log('Sign up error:', {error, json, status})
         } else if(status === 201) { // Created
-          const login = buildLoginState(username, password, json.token, json.user)
+          const login = buildLoginState({
+            username: username,
+            password: password,
+            jwtToken: json?.token,
+            user: json?.user
+          })
           this.context.setLogin(login)
           this.props.onSignup(login)
-        } else if(status === 422 && json.code === ErrCode.DUPLICATED_FIELD) {
+        } else if(status === 422 && json.code === ErrorCode.DUPLICATED_FIELD) {
           this.setState({
             username: {
               value: username,
@@ -63,62 +72,30 @@ class SignupForm extends Component {
     }
   }
 
-  validateUsername(username) {
-    if(/^\s*$/.test(username)) { // is blank
-      return 'Cannot be blank'
-    } else if(!/^[a-zA-Z0-9_\-.]*$/.test(username)) { // contains invalid characters (not matches)
-      return 'Latin letters, digits, underscores, dashes, dots only'
-    } else {
-      return null
-    }
-  }
-
   setUsername(username) {
     this.setState({
       username: {
-        error: this.validateUsername(username),
+        error: validateUsername(username),
         value: username
       }
     })
   }
 
-  validatePassword(password) {
-    if(password.length < 5) { 
-      return 'at least 5 characters'
-    } else if (/^[^a-z]*$/.test(password)) {
-      return 'must contain lowercased letters'
-    } else if (/^[^A-Z]*$/.test(password)) {
-      return 'must contain uppercased letters'
-    } else if (/^[^0-9]*$/.test(password)) {
-      return 'must contain digits'
-    } else {
-      return null
-    }
-  }
-
   setPassword(password) {
     this.setState(prevState => {
       prevState.password = {
-        error: this.validatePassword(password),
+        error: validatePassword(password),
         value: password
       }
-      prevState.repeatPassword.error = this.validateRepeatPassword(prevState.repeatPassword.value, password)
+      prevState.repeatPassword.error = validateRepeatPassword(prevState.repeatPassword.value, password)
       return prevState
     })
-  }
-
-  validateRepeatPassword(repeatPassword, password) {
-    if(password !== repeatPassword) {
-      return 'Passwords are not equal'
-    } else {
-      return null
-    }
   }
 
   setRepeatPassword(repeatPassword) {
     this.setState(prevState => {
       prevState.repeatPassword = {
-        error: this.validateRepeatPassword(repeatPassword, prevState.password.value),
+        error: validateRepeatPassword(repeatPassword, prevState.password.value),
         value: repeatPassword
       }
       return prevState

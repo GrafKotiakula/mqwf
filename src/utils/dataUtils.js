@@ -1,5 +1,5 @@
 import format from 'date-fns/format'
-import { isDefined, getValueOrDefault } from './varUtils.js'
+import { isNotEmptyArray } from './varUtils.js'
 
 const MAIN_RATING = 'Rating'
 const GRAPHIC = 'Graphic'
@@ -125,25 +125,25 @@ export const getDescriptionGetter = name => {
 export const getDescriptionByName = (name, value) => getDescriptionGetter(name)(value)
 
 export const positiveRatings = (rating) => ({
-  [MAIN_RATING]: getValueOrDefault(rating?.mainRating, 0),
-  [AUDIO]: getValueOrDefault(rating?.audio, 0),
-  [GRAPHIC]: getValueOrDefault(rating?.graphics, 0),
-  [GAMEPLAY]: getValueOrDefault(rating?.gameplay, 0),
-  [STORY]: getValueOrDefault(rating?.story, 0),
+  [MAIN_RATING]: rating?.mainRating || 0,
+  [AUDIO]: rating?.audio || 0,
+  [GRAPHIC]: rating?.graphics || 0,
+  [GAMEPLAY]: rating?.gameplay || 0,
+  [STORY]: rating?.story || 0,
 })
 
 export const neutralRatings = (rating) => ({
-  [DIFFICULTY]: getValueOrDefault(rating?.difficulty, 0),
-  [GRIND]: getValueOrDefault(rating?.grind, 0),
-  [GAME_TIME]: getValueOrDefault(rating?.gameTime, 0),
-  [MODS]: getValueOrDefault(rating?.mods, 0),
+  [DIFFICULTY]: rating?.difficulty || 0,
+  [GRIND]: rating?.grind || 0,
+  [GAME_TIME]: rating?.gameTime || 0,
+  [MODS]: rating?.mods || 0,
 })
 
 export const negativeRatings = (rating) => ({
-  [REQUIREMENTS]: getValueOrDefault(rating?.requirements, 0),
-  [BUGS]: getValueOrDefault(rating?.bugs, 0),
-  [MTX]: getValueOrDefault(rating?.microtransactions, 0),
-  [PRICE]: getValueOrDefault(rating?.price, 0),
+  [REQUIREMENTS]: rating?.requirements || 0,
+  [BUGS]: rating?.bugs || 0,
+  [MTX]: rating?.microtransactions || 0,
+  [PRICE]: rating?.price || 0,
 })
 
 export const allRatings = (rating) => ({
@@ -154,19 +154,31 @@ export const allRatings = (rating) => ({
 
 export const restorApiRating = (ratings, obj = {}) => ({
   ...obj,
-  mainRating: getValueOrDefault(ratings[MAIN_RATING], 0),
-  audio: getValueOrDefault(ratings[AUDIO], 0),
-  graphics: getValueOrDefault(ratings[GRAPHIC], 0),
-  gameplay: getValueOrDefault(ratings[GAMEPLAY], 0),
-  story: getValueOrDefault(ratings[STORY], 0),
-  difficulty: getValueOrDefault(ratings[DIFFICULTY], 0),
-  grind: getValueOrDefault(ratings[GRIND], 0),
-  gameTime: getValueOrDefault(ratings[GAME_TIME], 0),
-  mods: getValueOrDefault(ratings[MODS], 0),
-  requirements: getValueOrDefault(ratings[REQUIREMENTS], 0),
-  bugs: getValueOrDefault(ratings[BUGS], 0),
-  microtransactions: getValueOrDefault(ratings[MTX], 0),
-  price: getValueOrDefault(ratings[PRICE], 0),
+  mainRating: ratings[MAIN_RATING] || 0,
+  audio: ratings[AUDIO] || 0,
+  graphics: ratings[GRAPHIC] || 0,
+  gameplay: ratings[GAMEPLAY] || 0,
+  story: ratings[STORY] || 0,
+  difficulty: ratings[DIFFICULTY] || 0,
+  grind: ratings[GRIND] || 0,
+  gameTime: ratings[GAME_TIME] || 0,
+  mods: ratings[MODS] || 0,
+  requirements: ratings[REQUIREMENTS] || 0,
+  bugs: ratings[BUGS] || 0,
+  microtransactions: ratings[MTX] || 0,
+  price: ratings[PRICE] || 0,
 })
 
-export const formattedString = (date, def='Unknown') => isDefined(date) ? format(date, 'd MMMM yyyy') : def
+export const formattedDate = (date, def='Unknown') => date ? format(date, 'd MMMM yyyy') : def
+
+export const hasRole = (user, ...roles) => isNotEmptyArray(roles) && roles.includes(user?.role)
+
+export const toHumanSizeFormat = size => {
+  const mesures = ['B', 'KiB', 'MiB', 'GiB', 'TiB']
+  const divider = 1024
+  let i
+  let curSize
+  for(i = 0, curSize = size; i < mesures.length && curSize >= divider; ++i, curSize /= divider);
+  curSize = Math.floor(curSize*100)/100
+  return `${curSize} ${mesures[i]}`
+}

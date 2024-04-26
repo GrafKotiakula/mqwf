@@ -5,7 +5,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSquare as faSquareSolid } from '@fortawesome/free-solid-svg-icons'
 import { faSquare as faSquareRegular } from '@fortawesome/free-regular-svg-icons'
 
-import { isDefined } from '../../utils/varUtils'
 import styles from './RatingSelector.module.css'
 
 const buildGetDesc = func => {
@@ -42,7 +41,7 @@ const RatingSelector = ({value, onChange, name, className='', styleSelector, get
           icon={     <FontAwesomeIcon icon={faSquareSolid}   size='1x' className={styles['icon']}/>}
           emptyIcon={<FontAwesomeIcon icon={faSquareRegular} size='1x' className={styles['icon']}/>}
           value={value}
-          onChange={isDefined(onChange) ? (_, v) => onChange(v) : undefined}
+          onChange={onChange ? (_, v) => onChange(v) : undefined}
           onChangeActive={(_, h) => setHover(h)}
           classes={{
             iconFilled: iconStyle,

@@ -1,0 +1,14 @@
+.labeled-input {
+    margin-bottom: var(--margin-common);
+}
+
+.input-label {
+    font-size: var(--font-size-secondary);
+    margin-right: var(--margin-common);
+    width: 100%;
+    display: block;
+}
+
+.labeled-input > select {
+    width: 100%;
+}

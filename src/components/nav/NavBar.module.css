@@ -80,14 +80,16 @@
     background-color: transparent;
 }
 
-@media (max-width: 500px) {
+@media (max-width: 600px) {
+    .logo > label {
+        display: none;
+    }
+}
+
+@media (max-width: 450px) {
     .logo {
         width: 100%;
         justify-content: space-between;
-    }
-
-    .logo > label {
-        display: none;
     }
 
     .nav-content {

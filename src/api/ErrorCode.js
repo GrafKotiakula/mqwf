@@ -1,0 +1,14 @@
+const ErrorCode = Object.freeze({
+    JWT_EXPIRED: 1000,
+    JWT_INVALID: 1001,
+
+    WRONG_USERNAME_OR_PASSWORD: 1002,
+    ACCOUNT_NOT_ENABLED: 1003,
+
+    ENTOTY_NOT_FOUND: 1301,
+    REVIEW_BY_GAME_AND_USER_NOT_FOUND: 1302,
+
+    DUPLICATED_FIELD: 1407,
+})
+
+export default ErrorCode

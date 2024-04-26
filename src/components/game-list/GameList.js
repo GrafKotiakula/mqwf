@@ -3,12 +3,13 @@ import React, { Component } from 'react'
 import GameCard from './GameCard'
 import SearchBar from '../_common/SearchBar'
 import PaginationBar from '../_common/PaginationBar'
+import GRDataLoader from '../_common/GRDataLoader'
 
 import { withRouter } from '../../utils/routingUtils'
-import { getValueOrDefault, isDefined } from '../../utils/varUtils'
+import { pageNumberIsOk } from '../../utils/varUtils'
+import { findGamesByOptionalName, getAllGames } from "../../api/gameRestApi"
 
 import styles from './GameList.module.css'
-import { getAllGames } from '../../utils/restApi'
 
 const serchTextParameterName = 'search'
 const pageParameterName = 'page'
@@ -17,13 +18,15 @@ export class GameList extends Component {
   constructor(props){
     super(props)
 
-    const page = Math.max(getValueOrDefault(this.props.routing.queryParams.get(pageParameterName), '1'), 1)
+    const pageUrlValue = this.props.routing?.queryParams.get(pageParameterName)
+    const page = parseInt(pageUrlValue || 1)
 
     this.state = {
-      searchText: getValueOrDefault(this.props.routing.queryParams.get(serchTextParameterName), ''),
+      searchText: this.props.routing?.queryParams.get(serchTextParameterName) || '',
       pageCount: Math.max(15, page),
       page: page,
       games: null,
+      error: pageNumberIsOk(page) ? null : 400,
     }
 
     this.setText = this.setText.bind(this)
@@ -38,12 +41,15 @@ export class GameList extends Component {
   }
 
   setText(text) {
-    console.log('text updating')
     this.setState(prev => {
-      const newObj = {...prev}
-      newObj.searchText=text
-      this.updateQuery(newObj)
-      return newObj
+      const newState = {
+        ...prev,
+        searchText: text,
+        games: null,
+        error: null
+      }
+      this.updateQuery(newState)
+      return newState
     })
   }
 
@@ -53,59 +59,61 @@ export class GameList extends Component {
 
   setPage(page) {
     this.setState(prev => {
-      const newState = {...prev}
-      newState.page = this.calculatePage(page, 1, newState.pageCount)
+      const newState = {
+        ...prev,
+        page: this.calculatePage(page, 1, prev.pageCount)
+      }
       this.updateQuery(newState)
       return newState
     })
   }
 
-  updateGameList() {
-    getAllGames(this.state.page - 1)
+  loadGameList(serachText = this.state.searchText, page = this.state.page) {
+    findGamesByOptionalName(serachText, page - 1)
     .then(({status, json}) => {
       if(status !== 200) {
-        console.error('Get all games:', {status, json})
+        this.setState({
+          games: null,
+          error: status,
+        })
       } else {
         const {content, pagination: {pageNumber, totalPages}} = json
         this.setState({
           page: pageNumber + 1,
-          pageCount: totalPages,
-          games: content
+          // pageCount: totalPages,
+          pageCount: Math.max(totalPages, 15), // FOR DEMO
+          games: content,
+          error: null,
         })
       }
     })
   }
 
   componentDidMount() {
-    this.updateGameList()
+    if(!this.state.error) {
+      this.loadGameList()
+    }
   }
 
   componentDidUpdate(_, prevState) {
-    if(prevState.searchText !== this.state.searchText || prevState.page !== this.state.page){
-      this.updateGameList()
+    if( (prevState.page !== this.state.page && pageNumberIsOk(this.state.page))
+        || prevState.searchText !== this.state.searchText ){
+      this.loadGameList()
     }
   }
 
   render() {
     return (
-      <div className={styles['game-list-component']}>
+      <GRDataLoader error={this.state.error} isLoaded={this.state.games} loadedClassName={styles['game-list-component']}>
         <div className={styles['game-list-top-controllers']}>
           <SearchBar className={styles['game-list-search']} onSearch={this.setText} value={this.state.searchText}/>
           <PaginationBar className={styles['game-list-pagination']} current={this.state.page} count={this.state.pageCount} onSelect={this.setPage}/>
         </div>
-        
-        {isDefined(this.state.games) ?
-          (
-            <div className={styles['game-list']}>
-              {this.state.games.map((game, index) => <GameCard game={game} key={index} className={styles['game-list-element']}/>)}
-            </div>
-          )
-          :
-          <span style={{margin: '0 auto'}}>Loading...</span>
-        }
-        
+        <div className={styles['game-list']}>
+          {this.state.games?.map((game, index) => <GameCard game={game} key={index} className={styles['game-list-element']}/>)}
+        </div>
         <PaginationBar className={styles['game-list-pagination']} current={this.state.page} count={this.state.pageCount} onSelect={this.setPage}/>
-      </div>
+      </GRDataLoader>
     )
   }
 }

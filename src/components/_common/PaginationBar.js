@@ -54,8 +54,12 @@ const PaginationBar = ({
                     current = 1, // current page
                     neighbors = 3, // number (max) of current page neighbors to show
                     onSelect,
-                    className
+                    className,
+                    hideIfUsless = true
                 }) => {
+  if(hideIfUsless && count < 2) {
+    return <></>
+  }
   startFrom = parseInt(startFrom, 10)
   count = parseInt(count, 10)
   current = parseInt(current, 10)

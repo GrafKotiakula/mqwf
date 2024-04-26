@@ -6,11 +6,16 @@
 }
 
 .pages {
+    --mask-offset: 1.5em;
+    
     width:fit-content;
 
     display: flex;
     align-items: center;
     gap: var(--gap-common);
+
+    padding: 0 var(--mask-offset);
+    mask: linear-gradient(90deg, transparent, white var(--mask-offset), white calc(100% - var(--mask-offset)), transparent);
 }
 
 .page-bar-button {

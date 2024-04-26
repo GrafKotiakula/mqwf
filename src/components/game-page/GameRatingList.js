@@ -1,7 +1,6 @@
 import React from 'react'
 
 import GRCollapsible from '../_common/GRCollapsible'
-import Overlappable from '../_common/Overlappable'
 import { negativeRatings, neutralRatings, positiveRatings,
     positiveStyleSelector, neutralStyleSelector, negativeStyleSelector,
     getDescriptionByName } from '../../utils/dataUtils'
@@ -33,27 +32,26 @@ const GameRatingList = ({ratings, name='Rating details', grouped=true, className
   return (
     <GRCollapsible name={name} className={`${className} ${styles['rl-collapsible']}`} 
       triggerClassName={className}
+      contentClassName={styles['rl-collapsible-content']}
     >
-      <Overlappable showOverlap={!ratings} className={styles['rl-collapsible-content']}>
       {grouped && (
-          <label className={styles['rl-header']}>
-            Positive
-          </label>
-        )}
-        {displayPositiveRatings(positiveRatings(ratings))}
-        {grouped && (
-          <label className={styles['rl-header']}>
-            Neutral
-          </label>
-        )}
-        {displayNeutralRatings(neutralRatings(ratings))}
-        {grouped && (
-          <label className={styles['rl-header']}>
-            Negative
-          </label>
-        )}
-        {displayNegativeRatings(negativeRatings(ratings))}
-      </Overlappable>
+        <label className={styles['rl-header']}>
+          Positive
+        </label>
+      )}
+      {displayPositiveRatings(positiveRatings(ratings))}
+      {grouped && (
+        <label className={styles['rl-header']}>
+          Neutral
+        </label>
+      )}
+      {displayNeutralRatings(neutralRatings(ratings))}
+      {grouped && (
+        <label className={styles['rl-header']}>
+          Negative
+        </label>
+      )}
+      {displayNegativeRatings(negativeRatings(ratings))}
     </GRCollapsible>
   )
 }

@@ -40,7 +40,7 @@
 .game-list {
     flex-grow: 1;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(var(--img-minwidth), 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(var(--img-minwidth), 1fr));
     gap: var(--gap-common);
     align-items: start;
 }
@@ -50,6 +50,7 @@
 }
 
 .game-list:empty {
+    grid-template-columns: 100%;
     align-items: center;
 }
 

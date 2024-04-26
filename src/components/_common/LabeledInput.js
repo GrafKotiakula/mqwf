@@ -1,5 +1,4 @@
 import React from 'react'
-import { isDefined } from '../../utils/varUtils'
 import styles from './LabeledInput.module.css'
 
 const buildOnSubmit = (callBack) => {
@@ -13,14 +12,17 @@ const buildOnSubmit = (callBack) => {
   }
 }
 
-const LabeledInput = ({label, name, type='text', onChange, error, value, autoComplete='off'}) => {
+const LabeledInput = ({label, name, type='text', onChange, error, value, autoComplete='off', placeHolder: placeholder=''}) => {
   return (
     <div className={styles['labeled-input']}>
       <div>
-        {isDefined(label) && <label className={styles['input-label']}>{label}</label>}
-        {isDefined(error) && <label className={`${styles['input-error']} invisible-scroll`}>{error}</label>}
+        {label && <label className={styles['input-label']}>{label}</label>}
+        {error && <label className={`${styles['input-error']} invisible-scroll`}>{error}</label>}
       </div>
-      <input name={name} type={type} onChange={buildOnSubmit(onChange)} autoComplete={autoComplete} value={value}/>
+      <input name={name} type={type} 
+        value={value} onChange={buildOnSubmit(onChange)}
+        autoComplete={autoComplete} placeholder={placeholder}
+      />
     </div>
   )
 }

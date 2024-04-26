@@ -4,7 +4,6 @@ import { Radar } from 'react-chartjs-2'
 import Chart from "chart.js/auto";        // required for react-chartjs-2
 import { CategoryScale } from "chart.js"; // required for react-chartjs-2
 
-import Overlappable from '../_common/Overlappable';
 import { isNotEmptyString } from '../../utils/varUtils';
 import { positiveRatings, neutralRatings, negativeRatings } from '../../utils/dataUtils';
 
@@ -38,13 +37,13 @@ export const RatingRadarChart = ({data, color={r: 0, g:0, b:0}, title}) => (
 )
 
 const RatingCharts = ({game}) => {
-  const ratings = game ? game.avgRating : {}
+  const {avgRating:ratings={}} = game
   return (
-    <Overlappable showOverlap={!game} className={styles['charts-container']}>
+    <div className={styles['charts-container']}>
       <RatingRadarChart data={positiveRatings(ratings)} color={{r:0,   g:150, b:50 }} />
       <RatingRadarChart data={neutralRatings(ratings)}  color={{r:0,   g:150, b:255}} />
       <RatingRadarChart data={negativeRatings(ratings)} color={{r:200, g:50,  b:0  }}   />
-    </Overlappable>
+    </div>
   )
 }
 
