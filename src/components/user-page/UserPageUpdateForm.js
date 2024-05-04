@@ -3,12 +3,12 @@ import React, { Component } from 'react'
 import Popup from '../_common/Popup'
 import ImageSelector from '../_common/ImageSelector'
 import LabeledInput from '../_common/LabeledInput'
-import LabeldSelector from '../_common/LabeledSelector'
+import LabeledSelector from '../_common/LabeledSelector'
 
 import LoginContext from '../../LoginContext'
 import { isNotEmptyString } from '../../utils/varUtils'
 import { validatePassword, validateRepeatPassword, validateUsername } from '../../utils/validationUtils'
-import { isLogedin } from '../../api/authRestApi'
+import { isLoggedin } from '../../api/authRestApi'
 import { Role, updateUser as updateUserApi,
   updateUserImage as updateUserImageApi,
   updateUserPassword as updateUserPasswordApi,
@@ -137,7 +137,7 @@ export class UserPageUpdateForm extends Component {
     const user = this.props.user
     const username = this.state.username?.value
     
-    if(username && user && isLogedin(login) && this.isFilledOutCorrectly()) {
+    if(username && user && isLoggedin(login) && this.isFilledOutCorrectly()) {
       const id = this.getIdForRequest(user, login.user)
       updateUserApi({
         ...user,
@@ -176,7 +176,7 @@ export class UserPageUpdateForm extends Component {
     const {login, setLogin} = this.context
     const user = this.props.user
     const password = this.state.password?.value
-    if(password && user && isLogedin(login) && this.isFilledOutCorrectly()) {
+    if(password && user && isLoggedin(login) && this.isFilledOutCorrectly()) {
       const id = this.getIdForRequest(user, login.user)
       updateUserPasswordApi(password, login, id)
       .then(({status, json, newLogin}) => {
@@ -207,7 +207,7 @@ export class UserPageUpdateForm extends Component {
     const {login, setLogin} = this.context
     const user = this.props.user
     const file = this.state.file
-    if(file && user && isLogedin(login) && this.isFilledOutCorrectly()) {
+    if(file && user && isLoggedin(login) && this.isFilledOutCorrectly()) {
       const id = this.getIdForRequest(user, login.user)
       updateUserImageApi(file, login, id)
       .then(({status, json, newLogin}) => {
@@ -229,7 +229,7 @@ export class UserPageUpdateForm extends Component {
     const {login, setLogin} = this.context
     const user = this.props.user
     const role = this.state.role
-    if(user && role !== user.role && role && isLogedin(login) && this.isFilledOutCorrectly()) {
+    if(user && role !== user.role && role && isLoggedin(login) && this.isFilledOutCorrectly()) {
       const id = this.getIdForRequest(user, login.user)
       updateUserRoleApi(id, role, login)
       .then(({status, json, newLogin}) => {
@@ -265,7 +265,7 @@ export class UserPageUpdateForm extends Component {
         <Popup show={this.state.visible} onClose={this.setInvisible}>
           <form onSubmit={this.onSubmit} className={styles['form']}>
             {(user?.id === loginUser?.id || loginUser?.role === Role.admin) &&
-              <ImageSelector preferedRatio={1} label='Avatar' warn='Image should be square' maxSize={maxFileSize}
+              <ImageSelector preferredRatio={1} label='Avatar' warn='Image should be square' maxSize={maxFileSize}
                 value={this.state.file} onChange={this.setFile}
               />
             }
@@ -291,7 +291,7 @@ export class UserPageUpdateForm extends Component {
               />
             }
             {user?.id !== loginUser?.id && loginUser?.role === Role.admin &&
-              <LabeldSelector label='Role' options={Object.values(Role)} value={this.state.role} onChange={this.setRole}/>
+              <LabeledSelector label='Role' options={Object.values(Role)} value={this.state.role} onChange={this.setRole}/>
             }
             <div className={styles['buttons']}>
               <input type='submit' value='Save' disabled={!this.isFilledOutCorrectly()}/>

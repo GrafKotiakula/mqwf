@@ -9,16 +9,16 @@ import { positiveRatings, neutralRatings, negativeRatings } from '../../utils/da
 
 import styles from './RatingCharts.module.css'
 
-export const RatingRadarChart = ({data, color={r: 0, g:0, b:0}, title}) => (
+const RatingRadarChart = ({data, color={r: 0, g:0, b:0}, title}) => (
   // container (div) style is required by chart.js and should not be changed
   <div style={{position: 'relative', width: '100%', height: '100%'}}>
     <Radar 
       data={{
         labels: Object.keys(data),
         datasets: [{ 
-            data: Object.values(data), 
-            backgroundColor: `rgba(${color.r}, ${color.g}, ${color.b}, 0.5)`, 
-            borderColor: `rgba(${color.r}, ${color.g}, ${color.b}, 1)`
+          data: Object.values(data),
+          backgroundColor: `rgba(${color.r}, ${color.g}, ${color.b}, 0.5)`,
+          borderColor: `rgba(${color.r}, ${color.g}, ${color.b}, 1)`
         }]
       }}
       
@@ -42,7 +42,7 @@ const RatingCharts = ({game}) => {
     <div className={styles['charts-container']}>
       <RatingRadarChart data={positiveRatings(ratings)} color={{r:0,   g:150, b:50 }} />
       <RatingRadarChart data={neutralRatings(ratings)}  color={{r:0,   g:150, b:255}} />
-      <RatingRadarChart data={negativeRatings(ratings)} color={{r:200, g:50,  b:0  }}   />
+      <RatingRadarChart data={negativeRatings(ratings)} color={{r:200, g:50,  b:0  }} />
     </div>
   )
 }

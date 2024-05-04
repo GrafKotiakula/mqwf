@@ -1,6 +1,6 @@
 {
   "name": "game_ratings_mqwf",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.11.4",
@@ -17,6 +17,7 @@
     "react": "^18.2.0",
     "react-chartjs-2": "^5.2.0",
     "react-collapsible": "^2.10.0",
+    "react-datepicker": "^6.9.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.22.3",
     "react-scripts": "5.0.1"

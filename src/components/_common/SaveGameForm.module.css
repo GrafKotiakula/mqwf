@@ -1,0 +1,6 @@
+.buttons {
+    margin-top: var(--margin-big);
+    display: flex;
+    justify-content: end;
+    gap: var(--gap-common);
+}

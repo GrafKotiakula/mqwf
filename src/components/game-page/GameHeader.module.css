@@ -15,7 +15,7 @@
     justify-content: center;
     gap: var(--gap-big);
     padding: 0 var(--padding-big);
-    max-width: fit-content;
+    width: 100%;
 }
 
 .gd-name{
@@ -29,16 +29,6 @@
     width: 100%;
     height: fit-content;
 }
-
-/* .gd-props{
-    display: grid;
-    grid-template-columns: fit-content 1fr;
-    column-gap: 10px;
-}
-
-.gd-props > * {
-    width:fit-content;
-} */
 
 .gd-rating {
     display: flex;

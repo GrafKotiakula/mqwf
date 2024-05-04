@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 
-import LoginForm from '../auth/LoginForm'
-import SignupForm from '../auth/SignupForm'
+import LoginForm from './LoginForm'
+import SignupForm from './SignupForm'
 import Popup from '../_common/Popup'
 
-import { buildLogoutState, isLogedin } from "../../api/authRestApi"
+import { buildLogoutState, isLoggedin } from "../../api/authRestApi"
 import LoginContext from '../../LoginContext'
 
 class NavAuthForm extends Component {
@@ -52,14 +52,14 @@ class NavAuthForm extends Component {
   render() {
     return (
       <div>
-        {isLogedin(this.context.login) ? 
+        {isLoggedin(this.context.login) ? 
           <button type='button' onClick={this.logout} className={this.props.className}>Log out</button> :
           <button type='button' onClick={this.setVisible} className={this.props.className}>Log in</button>
         }
         <Popup show={this.state.visible} onClose={this.setInvisible}>
           {this.state.isLogIn ? 
-            <LoginForm onSignupCollback={this.setSignUp} onLogin={this.setInvisible}/> : 
-            <SignupForm onLoginCollback={this.setLogIn} onSignup={this.setInvisible}/>
+            <LoginForm onSignupCallback={this.setSignUp} onLogin={this.setInvisible}/> : 
+            <SignupForm onLoginCallback={this.setLogIn} onSignup={this.setInvisible}/>
           }
         </Popup>
       </div>

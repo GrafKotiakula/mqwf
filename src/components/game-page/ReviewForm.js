@@ -8,7 +8,7 @@ import LoginContext from '../../LoginContext'
 import { getDescriptionGetter, negativeRatings, neutralRatings, positiveRatings,
   negativeStyleSelector, neutralStyleSelector, positiveStyleSelector, restorApiRating } from '../../utils/dataUtils'
 import { isNotEmptyString } from '../../utils/varUtils'
-import { isLogedin } from "../../api/authRestApi"
+import { isLoggedin } from "../../api/authRestApi"
 import { findReviewByGameAndAuth, saveReview } from "../../api/reviewsRestApi"
 import ErrorCode from "../../api/ErrorCode"
 import { validateReviewText } from '../../utils/validationUtils'
@@ -83,7 +83,7 @@ export class ReviewForm extends Component {
   loadRating() {
     const gameId = this.props.game?.id
     const {login, setLogin} = this.context
-    if(gameId && isLogedin(login)) {
+    if(gameId && isLoggedin(login)) {
       findReviewByGameAndAuth(gameId, login)
       .then(({status, json, newLogin}) => {
         if(newLogin) {
@@ -103,7 +103,6 @@ export class ReviewForm extends Component {
         } else {
           console.error({status, json})
         }
-  
       })
     }
   }
@@ -139,13 +138,13 @@ export class ReviewForm extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     const {login} = this.context
-    if(!isLogedin(login) && this.state.isLoaded) {
+    if(!isLoggedin(login) && this.state.isLoaded) {
       this.setState({
         isLoaded: false
       })
     }
     if((prevProps.game?.id !== this.props.game?.id)
-     || (isLogedin(login) && !this.state.isLoaded)) {
+     || (isLoggedin(login) && !this.state.isLoaded)) {
       this.loadRating()
     }
   }
@@ -172,7 +171,7 @@ export class ReviewForm extends Component {
   render() {
     let {name='My review', disabled=false} = this.props
 
-    if(!isLogedin(this.context.login)) {
+    if(!isLoggedin(this.context.login)) {
       name = `${name} (login required)`
       disabled = true
     }

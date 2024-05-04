@@ -46,7 +46,7 @@ export class ImageSelector extends Component {
         })
         console.error(`File size (${file.size}) is biiger than maxSize (${this.maxSize})`)
       } else {
-        if(this.props.preferedRatio) {
+        if(this.props.preferredRatio) {
           const reader = new FileReader();
           reader.addEventListener('load', () => {
             const imageElement = new Image()
@@ -54,9 +54,9 @@ export class ImageSelector extends Component {
             imageElement.addEventListener('load', ({currentTarget}) => {
               const {naturalWidth, naturalHeight} = currentTarget
               let warn
-              if(!aspectRatioIsOk(naturalWidth, naturalHeight, this.props.preferedRatio)) {
+              if(!aspectRatioIsOk(naturalWidth, naturalHeight, this.props.preferredRatio)) {
                 warn = this.wrongAspectRationWarn
-                console.warn(`Wrong aspect ratio: ${naturalWidth/naturalHeight}, but expected ${this.props.preferedRatio}`)
+                console.warn(`Wrong aspect ratio: ${naturalWidth/naturalHeight}, but expected ${this.props.preferredRatio}`)
               } else {
                 warn = null
               }
@@ -73,6 +73,7 @@ export class ImageSelector extends Component {
           reader.addEventListener('error', this.failToLoad)
           reader.readAsDataURL(file)
         }
+        this.setStateAndCallBack({file: file})
       }
     } else {
       console.log('Not selected')

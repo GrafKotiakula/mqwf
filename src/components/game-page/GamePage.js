@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 
 import RatingCharts from './RatingCharts'
-import GameRatingList from './GameRatingList'
+import GameRatingList from '../_common/GameRatingList'
 import ReviewForm from './ReviewForm'
 import GameHeader from './GameHeader'
 import GRDataLoader from '../_common/GRDataLoader'
@@ -20,9 +20,11 @@ export class GamePage extends Component {
       game: null,
       error: null
     }
+
+    this.onUpdate = this.onUpdate.bind(this)
   }
 
-  loadGame(id) {
+  loadGame(id = this.props.routing?.urlParams?.id) {
     if(id) {
       getGameById(id)
       .then(({status, json}) => {
@@ -49,21 +51,26 @@ export class GamePage extends Component {
   }
 
   componentDidMount() {
-    this.loadGame(this.props.routing?.urlParams?.id)
+    this.loadGame()
+  }
+
+  onUpdate(game) {
+    this.setState({game})
   }
 
   render() {
+    const {game, error} = this.state
     return (
-      <GRDataLoader error={this.state.error} isLoaded={this.state.game} loadedClassName={styles['gp-content']}>
-        <GameHeader game={this.state.game}/>
+      <GRDataLoader error={error} isLoaded={game} loadedClassName={styles['gp-content']}>
+        <GameHeader game={game} onUpdate={this.onUpdate}/>
         
-        <label className={styles['gp-header']}>Marks</label>
-        <RatingCharts game={this.state.game}/>
-        <GameRatingList ratings={this.state.game?.avgRating}/>
+        <h1 className={styles['gp-header']}>Marks</h1>
+        <RatingCharts game={game}/>
+        <GameRatingList ratings={game?.avgRating}/>
 
-        <label className={styles['gp-header']}>Reviews</label>
-        <ReviewForm game={this.state.game}/>
-        <GPReviewList game={this.state.game}/>
+        <h1 className={styles['gp-header']}>Reviews</h1>
+        <ReviewForm game={game}/>
+        <GPReviewList game={game}/>
       </GRDataLoader>
     )
   }

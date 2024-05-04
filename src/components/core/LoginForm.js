@@ -82,7 +82,8 @@ class LoginForm extends Component {
   }
 
   render() {
-    let {username, passord, error} = this.state
+    const {username, passord, error} = this.state
+    const {onSignupCallback} = this.props
     return (
       <form className={styles['form']} key={this.props.key} onSubmit={this.onSubmit}>
         <LabeledInput label='Username' name='username' type='text' onChange={this.setUsername} value={username}/>
@@ -90,7 +91,7 @@ class LoginForm extends Component {
         {error && <label className={styles['input-error']}>{error}</label>}
         <div className={styles['buttons']}>
           <input type='submit' value='Log in'/>
-          <input type='button' value='Sign up' onClick={this.props.onSignupCollback} className='btn-secondary'/>
+          <input type='button' value='Sign up' onClick={onSignupCallback} className='btn-secondary'/>
         </div>
       </form>
     )

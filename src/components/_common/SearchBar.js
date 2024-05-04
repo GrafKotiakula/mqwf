@@ -37,13 +37,14 @@ class SearchBar extends Component {
     return (
       <form className={`${className} ${styles['search-bar']}`} onSubmit={this.onSubmit}>
         <input 
-            className={styles['search-bar-input']} 
-            name='search-text' 
-            type='text' 
-            value={this.state.text} 
-            onChange={this.onInput}
-            placeholder={placeholder} 
-            autoComplete={autoComplete}/>
+          className={styles['search-bar-input']} 
+          name='search-text' 
+          type='text' 
+          value={this.state.text} 
+          onChange={this.onInput}
+          placeholder={placeholder} 
+          autoComplete={autoComplete}
+        />
         <button className={styles['search-bar-button']} type='submit'>
           <FontAwesomeIcon icon={faMagnifyingGlass} />
         </button>

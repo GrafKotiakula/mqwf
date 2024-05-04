@@ -32,11 +32,15 @@ export const validatePassword = (password) => {
 
 export const validateRepeatPassword = (repeatPassword, password) => {
   if(password !== repeatPassword) {
-    return 'Passwords are not equal'
+    return 'passwords are not equal'
   } else {
     return null
   }
 }
+
+///
+/// REVIEWS
+///
 
 export const validateReviewText = text => {
   if(text.length > 5000) {
@@ -44,4 +48,74 @@ export const validateReviewText = text => {
   } else {
     return null
   }
+}
+
+///
+/// COMPANIES
+///
+
+export const validateCompanyName = name => {
+  if(name === null || name === undefined) {
+    return 'not defined'
+  } else if (name === '') {
+    return 'can not be empty'
+  } else if(name.length > 50) {
+    return 'not more than 50 characters'
+  } else if(/^\s.*$/.test(name)) {
+    return 'can not start with whitespace'
+  } else if(/^.*\s$/.test(name)) {
+    return 'can not end with whitespace'
+  } else {
+    return null
+  }
+}
+
+///
+/// GAMES
+///
+
+export const validateGameName = name => {
+  if(name === null || name === undefined) {
+    return 'not defined'
+  } else if (name === '') {
+    return 'can not be empty'
+  } else if(name.length > 50) {
+    return 'not more than 50 characters'
+  } else if(/^\s.*$/.test(name)) {
+    return 'can not start with whitespace'
+  } else if(/^.*\s$/.test(name)) {
+    return 'can not end with whitespace'
+  } else {
+    return null
+  }
+}
+
+export const validateGameImage = image => {
+  if(image === undefined) {
+    return 'undefined'
+  } else {
+    return null
+  }
+}
+
+export const validateGameRelease = date => {
+  if(!date) {
+    return 'not defined'
+  } else {
+    return null
+  }
+}
+
+export const validateGameDev = dev => {
+  if(dev === undefined) {
+    return 'is undefined'
+  } else if(dev && !dev.id) {
+    return 'id is not defined'
+  } else {
+    return null
+  }
+}
+
+export const validateGamePub = pub => {
+  return validateGameDev(pub) // similar
 }

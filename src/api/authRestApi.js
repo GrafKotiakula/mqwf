@@ -1,5 +1,6 @@
 import { isNotEmptyString } from "../utils/varUtils";
 import { __baseUrl, __jsonFetch } from "./_restApi";
+import { __parseUserJSON } from "./userRestApi";
 
 const jwtTokenExpiration = 3600000 // 1 hour
 
@@ -26,11 +27,13 @@ export const login = (username, password) => {
                     console.error(`${url}: JWT token is not defined`)
                     response.status === 601
                     response.statusText === 'Invalid Response'
-                }
+                } 
                 if (!response.json?.user) {
                     console.error(`${url}: user is not defined`)
                     response.status === 601
                     response.statusText === 'Invalid Response'
+                } else {
+                    response.json.user = __parseUserJSON(response.json.user)
                 }
             }
             return Promise.resolve(response)
@@ -65,7 +68,7 @@ export const buildLoginState = ({username = null, password = null, jwtToken = nu
     }
 })
 
-export const isLogedin = ({ user, credentials: {jwtToken, created} }) => 
+export const isLoggedin = ({ user, credentials: {jwtToken, created} }) => 
     isNotEmptyString(jwtToken) && user && Date.now() - created < jwtTokenExpiration
 
 export const buildLogoutState = () => buildLoginState({created: new Date(0)})

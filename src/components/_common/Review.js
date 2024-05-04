@@ -1,6 +1,6 @@
 import React from 'react'
 
-import GameRatingList from '../game-page/GameRatingList'
+import GameRatingList from './GameRatingList'
 import { formattedDate, selectStyle } from '../../utils/dataUtils'
 
 import styles from './Review.module.css'
@@ -17,7 +17,7 @@ const Review = ({review, headerBuilder}) => {
   const mainRating = review.rating.mainRating
   const qualityClassName = selectStyle(mainRating, {
     high: styles['good'],
-    mid: styles['avg'], 
+    mid: styles['avg'],
     low: styles['bad']
   })
   return (

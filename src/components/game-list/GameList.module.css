@@ -27,7 +27,7 @@
 
 .game-list-search {
     width: min(40em, 100%);
-    min-width: 20em;
+    min-width: min(20em, 100%);
 }
 
 .game-list-pagination {
@@ -41,23 +41,28 @@
     flex-grow: 1;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(var(--img-minwidth), 1fr));
+    grid-template-rows: min-content;
     gap: var(--gap-common);
-    align-items: start;
+    place-items: center;
 }
 
 .game-list-element {
     max-width: var(--img-maxwidth);
+    width: 100%;
 }
 
-.game-list:empty {
-    grid-template-columns: 100%;
-    align-items: center;
+.game-list[is-empty=true] {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    place-items: center;
 }
 
-.game-list:empty::before {
+.game-list[is-empty=true]::after {
     content: var(--gamelist-empty-content);
     text-align: center;
     font-size: 4em;
     font-weight: bold;
     color: var(--fgcolor-secondary);
+    padding: 0;
+    margin: 0;
 }

@@ -1,0 +1,58 @@
+.up-header {
+    max-width: 100%;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    gap: 20px;
+    padding: 10px;
+}
+
+.uph-image {
+    flex-shrink: 0;
+    border: solid 2px black
+}
+
+.uph-description {
+    width: fit-content;
+    height: min-content;
+    max-width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+
+    gap: 20px;
+}
+
+.uph-description-username {
+    font-size: 2em;
+    font-weight: bold;
+    
+    overflow: hidden;
+    overflow-wrap: break-word;
+}
+
+.uph-description-modify {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    
+    gap: 10px;
+}
+
+.uph-description-modify:empty {
+    display: none;
+}
+
+@media (max-width: 700px) {
+    .up-header {
+        flex-direction: column;
+    }
+
+    .uph-description-username {
+        text-align: center;
+    }
+}

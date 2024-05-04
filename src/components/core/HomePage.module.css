@@ -1,0 +1,61 @@
+.description {
+    height: min-content;
+    max-width: 1150px;
+
+    padding: var(--padding-common);
+    margin: auto;
+}
+
+.description *{
+    white-space: wrap;
+}
+
+.bottomAnchor {
+    margin-top: auto;
+}
+
+.name {
+    font-style: italic;
+    display: inline-block;
+    margin: 0 var(--margin-small);
+}
+.name::before, .name::after {
+    content: '"';
+}
+
+.description :is(h1, h2, h3) {
+    width: 100%;
+    text-align: center;
+}
+
+.description h1 {
+    font-size: 1.2em;
+    margin: var(--margin-big) 0;
+}
+
+.description h2 {
+    font-size: 1.2em;
+    font-weight: normal;
+}
+
+.description h3 {
+    font-weight: normal;
+}
+
+.description p {
+    margin: var(--margin-big) 0;
+}
+
+.description ul {
+    list-style: square;
+    list-style-position : inside;
+    margin: var(--margin-big) 0;
+}
+
+.description li::after {
+    content: ';';
+}
+
+.description li:last-of-type::after {
+    content: '.';
+}

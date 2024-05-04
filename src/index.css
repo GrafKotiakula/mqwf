@@ -6,6 +6,7 @@
   --font-size-primary: 16px;
   --font-size-secondary: 13px;
 
+  --padding-small: 5px;
   --padding-common: 10px;
   --padding-big: 20px;
   --margin-small: 4px;
@@ -97,18 +98,20 @@ main {
   flex-direction: column;
 }
 
-.input, input[type=text], input[type=password], textarea, select {
-  padding: 5px;
+.input, input[type=text], input[type=password], textarea {
+  padding: var(--padding-small);
 
   border-style: solid;
   border-width: var(--border-width-common);
   border-color: var(--border-color-secondary);
-
+  border-radius: 0;
+  
   background-color: white;
+  appearance: none;
 }
 
-.input:focus, input[type=text]:focus, input[type=password]:focus, 
-textarea:focus, select:focus{
+.input:focus, input[type=text]:focus,
+input[type=password]:focus, textarea:focus {
   outline: none;
   border-color: var(--border-color-primary);
 }
@@ -116,7 +119,7 @@ textarea:focus, select:focus{
 .button, button, input[type=submit], input[type=button] {
   cursor: pointer;
 
-  padding: 5px;
+  padding: var(--padding-small);
 
   font-weight: bold;
   

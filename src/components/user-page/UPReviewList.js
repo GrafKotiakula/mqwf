@@ -76,7 +76,7 @@ export class UPReviewList extends Component {
     const {page, pageAmount} = this.state
     return (
       <>
-        <label className={styles['uprl-header']}>Reviews ({this.state.reviewsTotalCount || 0})</label>
+        <h1 className={styles['uprl-header']}>Reviews ({this.state.reviewsTotalCount || 0})</h1>
         <GRDataLoader loadedClassName={styles['uprl-container']} isLoaded={this.state.reviews}>
           <PaginationBar className={styles['uprl-pagination-bar']} current={page} count={pageAmount} onSelect={this.setPage}/>
           <div className={styles['uprl-pagination-content']}>

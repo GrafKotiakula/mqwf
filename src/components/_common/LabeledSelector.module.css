@@ -9,6 +9,19 @@
     display: block;
 }
 
-.labeled-input > select {
+.select-wrapper {
+    position: relative;
+}
+
+.select-wrapper > select {
     width: 100%;
+}
+
+.select-wrapper > .select-icon {
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    translate: 0 -50%;
+
+    pointer-events: none;
 }

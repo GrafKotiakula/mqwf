@@ -6,8 +6,9 @@ function Footer() {
     <footer className={styles['footer']}>
       <label>Taras Shevchenko National University of Kyiv</label>
       <label>Faculty of Computer Science and Cybernetics</label>
+      <label>Department of Theory and Technology of Programming</label>
       <label>Game Ratings MQWF</label>
-      <label>2024</label>
+      <label>Kyiv-2024</label>
     </footer>
   )
 }

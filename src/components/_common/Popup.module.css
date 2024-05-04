@@ -10,6 +10,7 @@
 
     visibility: visible !important;
     display: grid !important;
+    padding: 0;
 
     background-color: var(--popup-bgcolor);
 }
@@ -23,9 +24,9 @@
     display: flex;
     flex-direction: column;
 
-    min-width: min(500px, 100svw);
-    width: max-content;
-    max-width: 100svw;
+    min-width: min(500px, calc(100svw - 2 * var(--border-width-common)));
+    width: min-content;
+    max-width: calc(100svw - 2 * var(--border-width-common));
 
     border: solid;
     border-width: var(--border-width-common);
@@ -48,7 +49,6 @@
 .popup-close-button {
     margin-left: auto;
     min-height: fit-content;
-    aspect-ratio: 1;
 
     display: flex;
     justify-content: center;

@@ -17,7 +17,6 @@ const getDesc = error => {
 }
 
 const GRDataLoader = ({text = 'Loading...', error, isLoaded, children, className='', loadedClassName=''}) => {
-  
   if(isLoaded) {
     return (
       <div className={`${className} ${loadedClassName} ${styles['loader-container']}`}>

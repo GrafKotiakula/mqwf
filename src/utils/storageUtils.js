@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { buildLoginState, buildLogoutState, isLogedin } from "../api/authRestApi"
+import { buildLoginState, buildLogoutState, isLoggedin } from "../api/authRestApi"
 
 const loginItemName = 'login'
 
@@ -10,7 +10,7 @@ const getLocalLogin = () => {
     const savedLogin = JSON.parse(localStorage.getItem(loginItemName)) || {}
     const login = buildLoginState(savedLogin)
     
-    if(isLogedin(login)) {
+    if(isLoggedin(login)) {
         return login
     } else {
         return buildLogoutState()

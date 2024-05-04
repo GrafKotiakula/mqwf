@@ -51,8 +51,7 @@ export class GPReviewList extends Component {
           const {content, pagination: {pageNumber, totalPages}} = json
           this.setState({
             page: pageNumber+1,
-            // pageAmount: totalPages,
-            pageAmount: Math.max(totalPages, 7), // FOR DEMO
+            pageAmount: totalPages,
             reviews: content,
           })
         } else {

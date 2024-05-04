@@ -1,6 +1,6 @@
 import React from 'react'
 
-import GRCollapsible from '../_common/GRCollapsible'
+import GRCollapsible from './GRCollapsible'
 import { negativeRatings, neutralRatings, positiveRatings,
     positiveStyleSelector, neutralStyleSelector, negativeStyleSelector,
     getDescriptionByName } from '../../utils/dataUtils'

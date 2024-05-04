@@ -41,7 +41,6 @@ class SignupForm extends Component {
 
   onSubmit(event) {
     event.preventDefault()
-    console.log(this.context)
     if(this.isFilledOutCorrectly()) {
       const {username: {value: username}, password: {value: password}} = this.state
 
@@ -130,7 +129,7 @@ class SignupForm extends Component {
         />
         <div className={styles['buttons']}>
           <input type='submit' value='Sign up' disabled={!this.isFilledOutCorrectly()}/>
-          <input type='button' value='Log in' onClick={this.props.onLoginCollback} className='btn-secondary'/>
+          <input type='button' value='Log in' onClick={this.props.onLoginCallback} className='btn-secondary'/>
         </div>
       </form>
     )

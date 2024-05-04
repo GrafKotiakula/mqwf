@@ -52,7 +52,7 @@ const __convertResponse = async (response, convertToJson = true) => {
 const __wrapedFetch = (url, options) => {
     return fetch(url, options)
     .catch(error => {
-        console.error(url, error)
+        console.error(url, '\n', error)
         if(error?.message?.startsWith('NetworkError')) {
             return Promise.resolve( __buildPrettyResponse({url: url, status: 600, statusText: 'Network Error'}) )
         } else {
@@ -99,8 +99,8 @@ const __authFetch = (url, options, jwtToken) => {
     return __jsonFetch(url, options)
 }
 
-export const __authenticatedRequest = async (uri, {credentials}, {options, params}) => {
-    const url = __buildUrl(uri, params?.queryParams)
+export const __authenticatedRequest = async (uri, {credentials}, {options, queryParams}) => {
+    const url = __buildUrl(uri, queryParams)
     const {username, password} = credentials
     let {jwtToken} = credentials
     let newLogin = null
@@ -115,7 +115,7 @@ export const __authenticatedRequest = async (uri, {credentials}, {options, param
     if(response.status === 401) {
         if (response.json.code === ErrorCode.JWT_EXPIRED || response.json.code === ErrorCode.JWT_INVALID) {
             const {json: {token: newJwtToken}, user: newUser, status} = await login(username, password)
-            if(status >= 400) { // if authentication failed
+            if(status >= 400) { // authentication failed
                 return Promise.reject(new Error('Cannot authenticate'))
             } else {
                 response = await __authFetch(url, options, jwtToken)

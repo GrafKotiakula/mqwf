@@ -1,0 +1,106 @@
+.labeled-input {
+    margin-bottom: var(--margin-common);
+}
+
+.label-container {
+    align-items: end;
+    display: flex;
+}
+
+.input-label {
+    font-size: var(--font-size-secondary);
+    margin-right: var(--margin-common);
+}
+
+.input-error {
+    font-size: var(--font-size-secondary);
+    text-transform: lowercase;
+    
+    color: var(--error-color);
+}
+
+.select-body {
+    display: flex;
+}
+
+.select-body:focus, .select-body:has(:focus) {
+    outline: solid;
+    outline-offset: calc(-1*var(--border-width-common));
+    outline-width: var(--border-width-common);
+    outline-color: var(--border-color-primary);
+}
+
+.selected-text {
+    pointer-events: none;
+    cursor: default !important;
+    flex-basis: 100%;
+    
+    border-right: none;
+    color: var(--fgcolor-primary);
+}
+
+.input-btn {
+    color: var(--fgcolor-primary);
+    background-color: var(--border-color-secondary);
+
+    border: solid;
+    border-width: var(--border-width-common);
+    border-color: var(--border-color-secondary);
+    border-radius: 0;
+}
+
+.input-body {
+    width: 100%;
+    display: flex;
+}
+
+.input-body > input {
+    flex-basis: 100%;
+    border-right: none;
+}
+
+.list {
+    display: grid;
+    grid-auto-rows: minmax(35px, 1fr);
+    gap: 10px;
+}
+
+.list > span {
+    cursor: pointer;
+    background-color: lightgray;
+    color: black;
+    display: grid;
+    place-items: center start;
+}
+
+.list > span:empty {
+    padding: 0;
+    width: 0;
+}
+
+.list > span:empty::before {
+    content: '\200b';
+}
+
+.input-body > input:focus {
+    border-color: var(--border-color-secondary);
+}
+
+.input-body:focus, .input-body:has(:focus) {
+    outline: solid;
+    outline-offset: calc(-1*var(--border-width-common));
+    outline-width: var(--border-width-common);
+    outline-color: var(--border-color-primary);
+}
+
+.status-bar {
+    display: block;
+    width: 100%;
+    text-align: center;
+    margin-top: 0.5em;
+    color: gray;
+}
+
+.status-bar:empty::before {
+    content: '\200b';
+}

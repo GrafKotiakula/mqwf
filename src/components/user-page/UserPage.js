@@ -1,19 +1,14 @@
 import React, { Component } from 'react'
 
-import HttpError from '../_common/GRDataLoader'
-import AvatarImage from '../_common/AvatarImage'
 import GRDataLoader from '../_common/GRDataLoader'
-import PropertyList from '../_common/PropertyList'
-import UserPageUpdateForm from './UserPageUpdateForm'
 
 import LoginContext from '../../LoginContext'
 import { withRouter } from '../../utils/routingUtils'
-import { Role, Status } from "../../api/userRestApi"
 import { blockUser as blockUserApi, getUserById, unblockUser as unblockUserApi } from "../../api/userRestApi"
-import { formattedDate, hasRole } from '../../utils/dataUtils'
 
 import styles from './UserPage.module.css'
 import UPReviewList from './UPReviewList'
+import UPHeader from './UPHeader'
 
 export class UserPage extends Component {
   static contextType = LoginContext
@@ -28,7 +23,6 @@ export class UserPage extends Component {
 
     this.setUser = this.setUser.bind(this)
     this.blockUser = this.blockUser.bind(this)
-    this.unblockUser = this.unblockUser.bind(this)
   }
 
   setUser(user) {
@@ -38,7 +32,7 @@ export class UserPage extends Component {
   loadUser(id = this.props.routing?.urlParams?.id) {
     if(id) {
       if(this.context.login?.user?.id == id) {
-        this.setState({user: this.context.login.user})
+        this.setState({user: this.context.login.user, error: null})
       } else {
         getUserById(id)
         .then(({status, json}) => {
@@ -72,30 +66,14 @@ export class UserPage extends Component {
     }
   }
 
-  blockUser() {
-    this.changeUserStateWiaApi(blockUserApi)
-  }
-
-  unblockUser() {
-    this.changeUserStateWiaApi(unblockUserApi)
-  }
-
-  selectPropsToShow = (user, loginUser) => {
-    if(hasRole(loginUser, Role.moderator, Role.admin)) {
-      return {
-        ID: user?.id,
-        Role: user?.role,
-        Created: formattedDate(user?.created),
-        Status: user?.status
-      }
+  blockUser(block) {
+    if(block) {
+      this.changeUserStateWiaApi(blockUserApi)
     } else {
-      return {
-        Role: user?.role,
-        Created: formattedDate(user?.created),
-      }
+      this.changeUserStateWiaApi(unblockUserApi)
     }
   }
-  
+
   componentDidUpdate(prevProps, prevState) {
     const curUrlId = this.props.routing?.urlParams?.id
     if(prevProps.routing?.urlParams?.id !== curUrlId) {
@@ -106,42 +84,15 @@ export class UserPage extends Component {
   componentDidMount() {
     this.loadUser()
   }
-
-  blockingButton = (user, loginUser) => {
-    if(hasRole(loginUser, Role.moderator, Role.admin) && user?.id !== loginUser?.id) {
-      if(user?.status === Status.enabled) {
-        return <button className='danger' onClick={this.blockUser}>Block</button>
-      } else {
-        return <button onClick={this.unblockUser}>Unblock</button>
-      }  
-    }  
-  }  
   
   render() {
-    if(this.state.error) {
-      return <HttpError error={this.state.error} />
-    } else {
-      const user = this.state.user
-      const loginUser = this.context.login?.user
-      return (
-        <GRDataLoader loadedClassName={styles['up-content']} isLoaded={this.state.user}>
-          <div className={styles['up-header']}>
-            <AvatarImage image={user?.image} className={styles['up-image']}/>
-            <div className={styles['up-description']}>
-              <label className={`${styles['up-description-username']}`}>{user?.username}</label>
-              <PropertyList values={this.selectPropsToShow(user, loginUser)}/>
-              <div className={styles['up-description-modify']}>
-                {(loginUser?.id === user?.id || loginUser?.role === Role.admin) && 
-                  <UserPageUpdateForm user={user} onChange={this.setUser}/>
-                }
-                {this.blockingButton(user, loginUser)}
-              </div>
-            </div>
-          </div>
-          <UPReviewList user={user}/>
-        </GRDataLoader>
-      )
-    }
+    const {user, error} = this.state
+    return (
+      <GRDataLoader loadedClassName={styles['up-content']} error={error} isLoaded={user}>
+        <UPHeader user={user} onChange={this.setUser} onBlock={this.blockUser}/>
+        <UPReviewList user={user}/>
+      </GRDataLoader>
+    )
   }
 }
 
