@@ -23,7 +23,7 @@
     display: flex;
 }
 
-.select-body:focus, .select-body:has(:focus) {
+.select-body:focus-within {
     outline: solid;
     outline-offset: calc(-1*var(--border-width-common));
     outline-width: var(--border-width-common);
@@ -86,7 +86,7 @@
     border-color: var(--border-color-secondary);
 }
 
-.input-body:focus, .input-body:has(:focus) {
+.input-body:focus-within {
     outline: solid;
     outline-offset: calc(-1*var(--border-width-common));
     outline-width: var(--border-width-common);

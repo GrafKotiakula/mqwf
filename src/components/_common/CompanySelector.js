@@ -94,10 +94,10 @@ export class CompanySelector extends Component {
         }
         if(status === 200 || status === 201) {
           this.setState({
-            value: json,
             searching: false, 
             popupShow: false
           })
+          this.setValue(json)
         }
         if(status === 201) {
           console.info(`Company ${name} have been created successfully`)
